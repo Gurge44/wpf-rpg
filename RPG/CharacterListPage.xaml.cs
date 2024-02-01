@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace RPG
@@ -8,26 +9,57 @@ namespace RPG
     /// </summary>
     public partial class CharacterListPage : Page
     {
-        private MainWindow mainWindow;
+        private readonly MainWindow mainWindow;
+        private const string filePath = "characters.txt";
         public CharacterListPage(MainWindow mainWindow)
         {
             InitializeComponent();
             this.mainWindow = mainWindow;
             LoadCharacters();
+            CurrentCharacterListPage.Instance = this;
         }
         private void LoadCharacters()
         {
-            // Your existing code to load characters and create buttons
-            // ...
+            Main.Characters = [];
 
-            foreach (var character in characters)
+            if (File.Exists(filePath))
             {
-                Button characterButton = new Button
+                string[] lines = File.ReadAllLines(filePath);
+
+                foreach (string line in lines)
+                {
+                    string[] values = line.Split(',');
+
+                    if (values.Length == 8)
+                    {
+                        Character character = new
+                        (
+                            name: values[0],
+                            species: (Species)int.Parse(values[1]),
+                            strength: (SkillLevel)int.Parse(values[2]),
+                            dexterity: (SkillLevel)int.Parse(values[3]),
+                            vitality: (SkillLevel)int.Parse(values[4]),
+                            magic: (SkillLevel)int.Parse(values[5]),
+                            speed: (SkillLevel)int.Parse(values[6]),
+                            imageURL: values[7]
+                        );
+                        Main.Characters.Add(character);
+                    }
+                }
+            }
+            else
+            {
+                File.CreateText(filePath);
+            }
+
+            foreach (var character in Main.Characters)
+            {
+                Button characterButton = new()
                 {
                     Content = character.Name,
-                    Tag = character,
-                    Click += CharacterButton_Click
+                    Tag = character
                 };
+                characterButton.Click += CharacterButton_Click;
 
                 characterButtonPanel.Children.Add(characterButton);
             }
@@ -43,7 +75,12 @@ namespace RPG
 
         private void AddCharacter_Click(object sender, RoutedEventArgs e)
         {
-            mainWindow.NavigateToEditingPage(new Character());
+            mainWindow.NavigateToEditingPage(CharacterHelper.GetDefaultCharacter());
         }
+    }
+
+    public static class CurrentCharacterListPage
+    {
+        public static CharacterListPage? Instance;
     }
 }

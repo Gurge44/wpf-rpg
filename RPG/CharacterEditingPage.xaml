@@ -8,6 +8,13 @@
       Title="CharacterEditingPage">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
         <TextBox x:Name="characterNameTextBox" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="200" Height="30"/>
         <StackPanel HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top">
             <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
@@ -16,7 +23,7 @@
                 <Button Content="-" Width="30" Height="30" Click="MinusButton_Click"/>
             </StackPanel>
         </StackPanel>
-        <Button Content="Save Character" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10" Click="SaveButton_Click"/>
+        <Button Grid.Column="1" Content="Save Character" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10" Click="SaveButton_Click"/>
         <Button Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,10" Click="CancelButton_Click"/>
     </Grid>
 </Page>

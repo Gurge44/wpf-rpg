@@ -20,16 +20,16 @@ namespace RPG
     /// </summary>
     public partial class CharacterEditingPage : Page
     {
-        private Character editingCharacter;
-        private MainWindow mainWindow;
-        public CharacterEditingPage()
+        private readonly Character editingCharacter;
+        private readonly MainWindow mainWindow;
+        public CharacterEditingPage(Character character, MainWindow mainWindow)
         {
             InitializeComponent();
             this.editingCharacter = character;
             this.mainWindow = mainWindow;
 
             characterNameTextBox.Text = editingCharacter.Name;
-            property1Label.Content = editingCharacter.Property1.ToString();
+            property1Label.Content = editingCharacter.Strength.ToString();
             // ... Set values for other properties
         }
         private void PlusButton_Click(object sender, RoutedEventArgs e)
@@ -45,7 +45,7 @@ namespace RPG
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             editingCharacter.Name = characterNameTextBox.Text;
-            editingCharacter.Property1 = int.Parse(property1Label.Content.ToString());
+            editingCharacter.Strength = (SkillLevel)int.Parse(property1Label.Content.ToString() ?? "0");
             // ... Update other properties
 
             mainWindow.Frame.NavigationService.GoBack();
