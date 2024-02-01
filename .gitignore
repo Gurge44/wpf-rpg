@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/RPG/.vs/RPG/FileContentIndex
+/.vs/rcs prodzsekt/v17
+/RPG/.vs/RPG
+/RPG/bin/Debug/net8.0-windows
+/RPG/obj/Debug/net8.0-windows/refint
+/RPG/obj/Debug/net8.0-windows/ref
