@@ -73,20 +73,20 @@ namespace RPG
         {
             switch (properties)
             {
-                case Properties.Strength:
-                    StrengthLabel.Content = GetValue(editingCharacter.Strength);
+                case Properties.Strength when SkillLevelHelper.ParseEnum(StrengthLabel.Content.ToString() ?? string.Empty, out var skillLevel) && skillLevel != null:
+                    StrengthLabel.Content = GetValue((SkillLevel)skillLevel);
                     break;
-                case Properties.Dexterity:
-                    DexterityLabel.Content = GetValue(editingCharacter.Dexterity);
+                case Properties.Dexterity when SkillLevelHelper.ParseEnum(DexterityLabel.Content.ToString() ?? string.Empty, out var skillLevel) && skillLevel != null:
+                    DexterityLabel.Content = GetValue((SkillLevel)skillLevel);
                     break;
-                case Properties.Vitality:
-                    VitalityLabel.Content = GetValue(editingCharacter.Vitality);
+                case Properties.Vitality when SkillLevelHelper.ParseEnum(VitalityLabel.Content.ToString() ?? string.Empty, out var skillLevel) && skillLevel != null:
+                    VitalityLabel.Content = GetValue((SkillLevel)skillLevel);
                     break;
-                case Properties.Magic:
-                    MagicLabel.Content = GetValue(editingCharacter.Magic);
+                case Properties.Magic when SkillLevelHelper.ParseEnum(MagicLabel.Content.ToString() ?? string.Empty, out var skillLevel) && skillLevel != null:
+                    MagicLabel.Content = GetValue((SkillLevel)skillLevel);
                     break;
-                case Properties.Speed:
-                    SpeedLabel.Content = GetValue(editingCharacter.Speed);
+                case Properties.Speed when SkillLevelHelper.ParseEnum(SpeedLabel.Content.ToString() ?? string.Empty, out var skillLevel) && skillLevel != null:
+                    SpeedLabel.Content = GetValue((SkillLevel)skillLevel);
                     break;
             }
             string GetValue(SkillLevel beforeValue) => ((SkillLevel)Math.Clamp((int)(increase ? ++beforeValue : --beforeValue), (int)SkillLevel.VeryLow, (int)SkillLevel.VeryHigh)).GetDescription();
