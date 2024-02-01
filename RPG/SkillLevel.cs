@@ -1,15 +1,42 @@
-﻿namespace RPG
+﻿using System.ComponentModel;
+using System.Diagnostics.Eventing.Reader;
+
+namespace RPG
 {
     public enum SkillLevel
     {
+        [Description("Very Low")]
         VeryLow,
         Low,
         Average,
         High,
+        [Description("Very High")]
         VeryHigh
     }
     public static class SkillLevelHelper
     {
+        /// <summary>
+        /// Tries to parse the string <paramref name="s"/> to a <paramref name="skillLevel"/> enum.
+        /// </summary>
+        /// <param name="s">The string to convert to <paramref name="skillLevel"/>.</param>
+        /// <param name="skillLevel">The SkillLevel enum equal by description to <paramref name="s"/> by description, if the conversion was successful.</param>
+        /// <returns>A boolean representing whether the conversion of <paramref name="s"/> was successful or not.</returns>
+        public static bool ParseEnum(string s, out SkillLevel? skillLevel)
+        {
+            skillLevel = null;
+            foreach (var item in Enum.GetValues(typeof(SkillLevel)))
+            {
+                if (item == null) continue;
+                var skillLevelItem = (SkillLevel)item;
+
+                if (skillLevelItem.GetDescription().Equals(s, StringComparison.OrdinalIgnoreCase))
+                {
+                    skillLevel = skillLevelItem;
+                    return true;
+                }
+            }
+            return false;
+        }
         public static SkillLevel GetDefaultStrength(Species species) => species switch
         {
             Species.Stonekin => SkillLevel.VeryHigh,

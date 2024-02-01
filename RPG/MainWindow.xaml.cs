@@ -19,7 +19,8 @@ namespace RPG
         public MainWindow()
         {
             InitializeComponent();
-            Frame.NavigationService.Navigate(new CharacterListPage(this));
+            //Frame.NavigationService.Navigate(new CharacterListPage(this));
+            NavigateToEditingPage(CharacterHelper.GetDefaultCharacter());
         }
         public void NavigateToEditingPage(Character character)
         {

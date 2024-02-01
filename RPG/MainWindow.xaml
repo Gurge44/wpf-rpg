@@ -4,8 +4,63 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="MainWindow" Height="720" Width="1280">
-    <Grid>
-        <Frame x:Name="Frame" NavigationUIVisibility="Hidden"/>
+        Title="RPG" Height="720" Width="1280" FontSize="24" MinWidth="1280" MinHeight="720" MaxHeight="720" MaxWidth="720">
+
+    <Window.Resources>
+        <SolidColorBrush x:Key="CommonBackgroundBrush" Color="#808080"/>
+
+        <Style x:Key="CustomButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource CommonBackgroundBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="White"/>
+                    <Setter Property="Foreground" Value="Black"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="CustomLabelStyle" TargetType="Label">
+            <Setter Property="Background" Value="{StaticResource CommonBackgroundBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+        <Style x:Key="CustomTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Background" Value="{StaticResource CommonBackgroundBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid MinHeight="4096">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions></Grid.ColumnDefinitions>
+        
+        <Frame x:Name="Frame" NavigationUIVisibility="Hidden" MinHeight="720"/>
+
+        <StackPanel Grid.Row="0"/>
+        <StackPanel Grid.Row="1">
+            <Button HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center"/>
+        </StackPanel>
+        <StackPanel/>
+        <StackPanel Grid.Row="2"/>
+        <StackPanel Grid.Row="3"/>
+        <StackPanel Grid.Row="4"/>
+        <StackPanel Grid.Row="5"/>
     </Grid>
 </Window>
