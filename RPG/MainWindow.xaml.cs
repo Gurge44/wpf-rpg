@@ -19,12 +19,22 @@ namespace RPG
         public MainWindow()
         {
             InitializeComponent();
-            //Frame.NavigationService.Navigate(new CharacterListPage(this));
-            NavigateToEditingPage(CharacterHelper.GetDefaultCharacter());
+            //NavigateToEditingPage(CharacterHelper.GetDefaultCharacter());
+            Main.LoadResources();
         }
         public void NavigateToEditingPage(Character character)
         {
             Frame.NavigationService.Navigate(new CharacterEditingPage(character, this));
+        }
+
+        private void ManageCharactersButton_Click(object sender, RoutedEventArgs e)
+        {
+            TitleLabel.Visibility = Visibility.Hidden;
+            NewGameButton.Visibility = Visibility.Hidden;
+            LoadGameButton.Visibility = Visibility.Hidden;
+            ManageCharactersButton.Visibility = Visibility.Hidden;
+
+            Frame.NavigationService.Navigate(new CharacterListPage(this));
         }
     }
 }

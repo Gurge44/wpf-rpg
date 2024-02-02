@@ -52,6 +52,9 @@ namespace RPG
             if (SkillLevelHelper.ParseEnum(StrengthLabel.Content.ToString() ?? string.Empty, out SkillLevel? skillLevel5) && skillLevel5 != null) editingCharacter.Speed = (SkillLevel)skillLevel5;
 
             Main.Characters.Add(editingCharacter);
+            CurrentCharacterListPage.Instance?.SaveCharacters();
+            CurrentCharacterListPage.Instance?.LoadCharacters(false);
+
             mainWindow.Frame.NavigationService.GoBack();
         }
 

@@ -15,12 +15,13 @@ namespace RPG
         {
             InitializeComponent();
             this.mainWindow = mainWindow;
-            LoadCharacters();
+            LoadCharacters(true);
             CurrentCharacterListPage.Instance = this;
         }
-        private void LoadCharacters()
+        public void LoadCharacters(bool firstLoad)
         {
-            Main.Characters = [];
+            if (firstLoad) Main.Characters = [];
+            else characterButtonPanel.Children.RemoveRange(1, characterButtonPanel.Children.Count - 1);
 
             if (File.Exists(filePath))
             {
@@ -52,17 +53,40 @@ namespace RPG
                 File.CreateText(filePath);
             }
 
+            (int Column, int Row) = (1, 0);
             foreach (var character in Main.Characters)
             {
                 Button characterButton = new()
                 {
-                    Content = character.Name,
-                    Tag = character
+                    Content = character.Name == string.Empty ? "Unnamed" : character.Name,
+                    Tag = character,
+                    Style = AddCharacterButton.Style,
+                    Padding = new Thickness(10, 10, 10, 10),
+                    Margin = new Thickness(20, 0, 20, 5),
+                    MinWidth = 50,
+                    Visibility = Visibility.Visible,
+                    FontSize = 20
                 };
                 characterButton.Click += CharacterButton_Click;
 
+                characterButton.SetValue(Grid.ColumnProperty, Column); Grid.SetColumn(characterButton, Column);
+                characterButton.SetValue(Grid.RowProperty, Row); Grid.SetRow(characterButton, Row);
+
+                Column++;
+                if (Column > 3)
+                {
+                    Row++;
+                    Column = 0;
+                    if (Row > 4) break;
+                }
+
                 characterButtonPanel.Children.Add(characterButton);
             }
+        }
+
+        public void SaveCharacters()
+        {
+            File.WriteAllLines(filePath, Main.Characters.Select(x => x.ToString() ?? string.Empty));
         }
 
         private void CharacterButton_Click(object sender, RoutedEventArgs e)
@@ -76,6 +100,19 @@ namespace RPG
         private void AddCharacter_Click(object sender, RoutedEventArgs e)
         {
             mainWindow.NavigateToEditingPage(CharacterHelper.GetDefaultCharacter());
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            mainWindow.TitleLabel.Visibility = Visibility.Visible;
+            mainWindow.NewGameButton.Visibility = Visibility.Visible;
+            mainWindow.LoadGameButton.Visibility = Visibility.Visible;
+            mainWindow.ManageCharactersButton.Visibility = Visibility.Visible;
+
+            characterButtonPanel.Visibility = Visibility.Hidden;
+            BackButton.Visibility = Visibility.Hidden;
+
+            SaveCharacters();
         }
     }
 

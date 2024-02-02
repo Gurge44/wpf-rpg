@@ -7,7 +7,111 @@
       d:DesignHeight="720" d:DesignWidth="1280"
       Title="CharacterListPage" FontSize="24">
 
+    <Page.Resources>
+        <SolidColorBrush x:Key="CommonBackgroundBrush" Color="Black" Opacity="0.6"/>
+
+        <Style x:Key="CustomButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource CommonBackgroundBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Grid.RenderTransform>
+                                <ScaleTransform x:Name="scaleTransform" ScaleX="1" ScaleY="1"/>
+                            </Grid.RenderTransform>
+                            <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <!-- Scale to 120% when hovering -->
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="scaleTransform" Storyboard.TargetProperty="ScaleX" To="1.2" Duration="0:0:0.2"/>
+                                            <DoubleAnimation Storyboard.TargetName="scaleTransform" Storyboard.TargetProperty="ScaleY" To="1.2" Duration="0:0:0.2"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Setter Property="Background" Value="White"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                                <Trigger.ExitActions>
+                                    <!-- Return to normal size when not hovering -->
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="scaleTransform" Storyboard.TargetProperty="ScaleX" To="1" Duration="0:0:0.2"/>
+                                            <DoubleAnimation Storyboard.TargetName="scaleTransform" Storyboard.TargetProperty="ScaleY" To="1" Duration="0:0:0.2"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="CustomLabelStyle" TargetType="Label">
+            <Setter Property="Background" Value="{StaticResource CommonBackgroundBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+        <Style x:Key="CustomTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Background" Value="{StaticResource CommonBackgroundBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+        <Style x:Key="CustomComboBoxStyle" TargetType="ComboBox">
+            <Setter Property="Background" Value="{StaticResource CommonBackgroundBrush}" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="35" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <ToggleButton
+                            Name="ToggleButton"
+                            IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Foreground="White">
+                                <ContentPresenter
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Content="{TemplateBinding SelectionBoxItem}"
+                                ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" />
+                            </ToggleButton>
+                            <Popup
+                            IsOpen="{TemplateBinding IsDropDownOpen}"
+                            PlacementTarget="{Binding ElementName=ToggleButton}"
+                            Placement="Bottom">
+                                <Border
+                                Background="{StaticResource CommonBackgroundBrush}"
+                                BorderThickness="1">
+                                    <ScrollViewer>
+                                        <ItemsPresenter />
+                                    </ScrollViewer>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Page.Resources>
+
     <Grid>
+
+        <Grid.Background>
+            <ImageBrush ImageSource="cs2.jpg"/>
+        </Grid.Background>
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
@@ -20,10 +124,15 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         
-        <StackPanel x:Name="characterButtonPanel" Orientation="Vertical" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top">
-            <Button Content="+" Click="AddCharacter_Click" MinWidth="100" MinHeight="100" Margin="0,0,0,10" VerticalAlignment="Top" VerticalContentAlignment="Top" HorizontalAlignment="Center" HorizontalContentAlignment="Center" FontSize="60"/>
+        <StackPanel x:Name="characterButtonPanel" Orientation="Horizontal" HorizontalAlignment="Left" Margin="20,20,0,0" VerticalAlignment="Top">
+            <Button Style="{StaticResource CustomButtonStyle}" Name="AddCharacterButton" Content="+" Click="AddCharacter_Click" FontWeight="Black" FontSize="44" Width="90" Height="85" Margin="20,0,20,5"/>
         </StackPanel>
+
+        <Button Style="{StaticResource CustomButtonStyle}" Content=" BACK TO MAIN MENU " Grid.Row="5" Grid.Column="3" HorizontalContentAlignment="Center" Margin="0,0,60,60" Click="BackButton_Click" Name="BackButton"/>
+        
     </Grid>
 </Page>

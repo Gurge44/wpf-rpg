@@ -143,7 +143,7 @@
 
         <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal"  VerticalAlignment="Center" HorizontalAlignment="Center">
             <Label Style="{StaticResource CustomLabelStyle}" Content=" Character Name: " Margin="0,0,20,0" Width="210" Height="44"/>
-            <TextBox Style="{StaticResource CustomTextBoxStyle}" x:Name="characterNameTextBox" TextWrapping="Wrap" Text=" Character Name " Height="44" Width="300" Margin="20,0,0,0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+            <TextBox Style="{StaticResource CustomTextBoxStyle}" x:Name="characterNameTextBox" TextWrapping="Wrap" MaxLength="20" Text=" Character Name " Height="44" Width="300" Margin="20,0,0,0" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="20,20,20,20" HorizontalAlignment="Center">
