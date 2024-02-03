@@ -20,48 +20,58 @@ namespace RPG
     /// </summary>
     public partial class CharacterEditingPage : Page
     {
-        private readonly Character editingCharacter;
-        private readonly MainWindow mainWindow;
-        public CharacterEditingPage(Character character, MainWindow mainWindow)
+        private readonly Character EditingCharacter;
+        public CharacterEditingPage(Character character)
         {
             InitializeComponent();
-            editingCharacter = character;
-            this.mainWindow = mainWindow;
+            EditingCharacter = character;
 
-            characterNameTextBox.Text = editingCharacter.Name;
-
-            StrengthLabel.Content = editingCharacter.Strength.GetDescription();
-            DexterityLabel.Content = editingCharacter.Dexterity.GetDescription();
-            VitalityLabel.Content = editingCharacter.Vitality.GetDescription();
-            MagicLabel.Content = editingCharacter.Magic.GetDescription();
-            SpeedLabel.Content = editingCharacter.Speed.GetDescription();
+            characterNameTextBox.Text = EditingCharacter.Name;
+            SetValues();
 
             SpeciesComboBox.ItemsSource = Enum.GetValues(typeof(Species));
-            SpeciesComboBox.SelectedItem = editingCharacter.Species;
+            SpeciesComboBox.SelectedItem = EditingCharacter.Species;
+
+            try
+            {
+                characterImage.Source = new BitmapImage(new Uri(EditingCharacter.ImageURL));
+            }
+            catch
+            {
+                SetRandomImage();
+            }
+        }
+
+        private void SetValues()
+        {
+            StrengthLabel.Content = EditingCharacter.Strength.GetDescription();
+            DexterityLabel.Content = EditingCharacter.Dexterity.GetDescription();
+            VitalityLabel.Content = EditingCharacter.Vitality.GetDescription();
+            MagicLabel.Content = EditingCharacter.Magic.GetDescription();
+            SpeedLabel.Content = EditingCharacter.Speed.GetDescription();
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            editingCharacter.Name = characterNameTextBox.Text;
-            editingCharacter.Species = (Species)SpeciesComboBox.SelectedItem;
+            EditingCharacter.Name = characterNameTextBox.Text;
+            EditingCharacter.Species = (Species)SpeciesComboBox.SelectedItem;
 
-            if (SkillLevelHelper.ParseEnum(StrengthLabel.Content.ToString() ?? string.Empty, out SkillLevel? skillLevel1) && skillLevel1 != null) editingCharacter.Strength = (SkillLevel)skillLevel1;
-            if (SkillLevelHelper.ParseEnum(StrengthLabel.Content.ToString() ?? string.Empty, out SkillLevel? skillLevel2) && skillLevel2 != null) editingCharacter.Dexterity = (SkillLevel)skillLevel2;
-            if (SkillLevelHelper.ParseEnum(StrengthLabel.Content.ToString() ?? string.Empty, out SkillLevel? skillLevel3) && skillLevel3 != null) editingCharacter.Vitality = (SkillLevel)skillLevel3;
-            if (SkillLevelHelper.ParseEnum(StrengthLabel.Content.ToString() ?? string.Empty, out SkillLevel? skillLevel4) && skillLevel4 != null) editingCharacter.Magic = (SkillLevel)skillLevel4;
-            if (SkillLevelHelper.ParseEnum(StrengthLabel.Content.ToString() ?? string.Empty, out SkillLevel? skillLevel5) && skillLevel5 != null) editingCharacter.Speed = (SkillLevel)skillLevel5;
+            if (SkillLevelHelper.ParseEnum(StrengthLabel.Content.ToString() ?? string.Empty, out SkillLevel? strength) && strength != null) EditingCharacter.Strength = (SkillLevel)strength;
+            if (SkillLevelHelper.ParseEnum(DexterityLabel.Content.ToString() ?? string.Empty, out SkillLevel? dexterity) && dexterity != null) EditingCharacter.Dexterity = (SkillLevel)dexterity;
+            if (SkillLevelHelper.ParseEnum(VitalityLabel.Content.ToString() ?? string.Empty, out SkillLevel? vitality) && vitality != null) EditingCharacter.Vitality = (SkillLevel)vitality;
+            if (SkillLevelHelper.ParseEnum(MagicLabel.Content.ToString() ?? string.Empty, out SkillLevel? magic) && magic != null) EditingCharacter.Magic = (SkillLevel)magic;
+            if (SkillLevelHelper.ParseEnum(SpeedLabel.Content.ToString() ?? string.Empty, out SkillLevel? speed) && speed != null) EditingCharacter.Speed = (SkillLevel)speed;
 
-            Main.Characters.Add(editingCharacter);
-            CurrentCharacterListPage.Instance?.SaveCharacters();
+            Main.Characters.Add(EditingCharacter);
+            CharacterListPage.SaveCharacters();
             CurrentCharacterListPage.Instance?.LoadCharacters(false);
 
-            mainWindow.Frame.NavigationService.GoBack();
+            GoBack();
         }
 
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            mainWindow.Frame.NavigationService.GoBack();
-        }
+        private void CancelButton_Click(object sender, RoutedEventArgs e) => GoBack();
+
+        private static void GoBack() => CurrentMainWindow.Instance?.Frame.NavigationService.GoBack();
 
         enum Properties
         {
@@ -105,5 +115,35 @@ namespace RPG
         private void MagicButtonMinus_Click(object sender, RoutedEventArgs e) => UpdateValue(false, Properties.Magic);
         private void SpeedButtonPlus_Click(object sender, RoutedEventArgs e) => UpdateValue(true, Properties.Speed);
         private void SpeedButtonMinus_Click(object sender, RoutedEventArgs e) => UpdateValue(false, Properties.Speed);
+
+        private void SwapNameButton_Click(object sender, RoutedEventArgs e)
+        {
+            characterNameTextBox.Text = Main.RandomNames.RandomElement();
+            characterNameTextBox.Focus();
+        }
+
+        private void ResetButton_Click(object sender, RoutedEventArgs e)
+        {
+            EditingCharacter.Species = (Species)SpeciesComboBox.SelectedItem;
+            EditingCharacter.SetAllValuesToDefault();
+            SetValues();
+        }
+
+        private void RandomImageButton_Click(object sender, RoutedEventArgs e) => SetRandomImage();
+
+        private void SetRandomImage()
+        {
+            string uriString = Main.ImageURLs.RandomElement() ?? string.Empty;
+
+            try
+            {
+                // Do not touch - it took me 7 hours to get it working
+                characterImage.Source = new BitmapImage(new Uri(uriString, UriKind.Absolute));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

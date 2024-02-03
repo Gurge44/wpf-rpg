@@ -9,12 +9,10 @@ namespace RPG
     /// </summary>
     public partial class CharacterListPage : Page
     {
-        private readonly MainWindow mainWindow;
         private const string filePath = "characters.txt";
-        public CharacterListPage(MainWindow mainWindow)
+        public CharacterListPage()
         {
             InitializeComponent();
-            this.mainWindow = mainWindow;
             LoadCharacters(true);
             CurrentCharacterListPage.Instance = this;
         }
@@ -84,7 +82,7 @@ namespace RPG
             }
         }
 
-        public void SaveCharacters()
+        public static void SaveCharacters()
         {
             File.WriteAllLines(filePath, Main.Characters.Select(x => x.ToString() ?? string.Empty));
         }
@@ -93,21 +91,24 @@ namespace RPG
         {
             if (sender is Button characterButton && characterButton.Tag is Character selectedCharacter)
             {
-                mainWindow.NavigateToEditingPage(selectedCharacter);
+                CurrentMainWindow.Instance?.NavigateToEditingPage(selectedCharacter);
             }
         }
 
         private void AddCharacter_Click(object sender, RoutedEventArgs e)
         {
-            mainWindow.NavigateToEditingPage(CharacterHelper.GetDefaultCharacter());
+            CurrentMainWindow.Instance?.NavigateToEditingPage(CharacterHelper.GetDefaultCharacter());
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            mainWindow.TitleLabel.Visibility = Visibility.Visible;
-            mainWindow.NewGameButton.Visibility = Visibility.Visible;
-            mainWindow.LoadGameButton.Visibility = Visibility.Visible;
-            mainWindow.ManageCharactersButton.Visibility = Visibility.Visible;
+            if (CurrentMainWindow.Instance != null)
+            {
+                CurrentMainWindow.Instance.TitleLabel.Visibility = Visibility.Visible;
+                CurrentMainWindow.Instance.NewGameButton.Visibility = Visibility.Visible;
+                CurrentMainWindow.Instance.LoadGameButton.Visibility = Visibility.Visible;
+                CurrentMainWindow.Instance.ManageCharactersButton.Visibility = Visibility.Visible;
+            }
 
             characterButtonPanel.Visibility = Visibility.Hidden;
             BackButton.Visibility = Visibility.Hidden;
@@ -118,6 +119,8 @@ namespace RPG
 
     public static class CurrentCharacterListPage
     {
-        public static CharacterListPage? Instance;
+        private static CharacterListPage? instance;
+
+        public static CharacterListPage? Instance { get => instance; set => instance = value; }
     }
 }

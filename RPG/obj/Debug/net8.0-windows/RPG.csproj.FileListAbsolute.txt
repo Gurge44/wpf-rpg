@@ -22,3 +22,4 @@ E:\Sulis fájlok\rcs prodzsekt\RPG\obj\Debug\net8.0-windows\refint\RPG.dll
 E:\Sulis fájlok\rcs prodzsekt\RPG\obj\Debug\net8.0-windows\RPG.pdb
 E:\Sulis fájlok\rcs prodzsekt\RPG\obj\Debug\net8.0-windows\RPG.genruntimeconfig.cache
 E:\Sulis fájlok\rcs prodzsekt\RPG\obj\Debug\net8.0-windows\ref\RPG.dll
+E:\Sulis fájlok\rcs prodzsekt\RPG\bin\Debug\net8.0-windows\RandomNames.txt

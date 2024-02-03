@@ -25,6 +25,8 @@ namespace RPG
             Magic = SkillLevelHelper.GetDefaultMagic(Species);
             Speed = SkillLevelHelper.GetDefaultSpeed(Species);
         }
+
+        public override string ToString() => string.Join(',', [Name, $"{(int)Species}", $"{(int)Strength}", $"{(int)Dexterity}", $"{(int)Vitality}", $"{(int)Magic}", $"{(int)Speed}", ImageURL]);
     }
     public static class CharacterHelper
     {
