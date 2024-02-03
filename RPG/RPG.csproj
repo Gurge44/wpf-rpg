@@ -9,6 +9,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="cancel.png" />
+    <None Remove="delete.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="cancel.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Characters\char1.png" />
     <Resource Include="Characters\char10.png" />
     <Resource Include="Characters\char11.png" />
@@ -24,6 +32,9 @@
     <Resource Include="Characters\char8.png" />
     <Resource Include="Characters\char9.png" />
     <Resource Include="cs2.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="delete.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="reset.png">

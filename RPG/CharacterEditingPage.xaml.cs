@@ -53,6 +53,17 @@ namespace RPG
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
+            SaveValues();
+
+            Main.Characters.Add(EditingCharacter);
+            CharacterListPage.SaveCharacters();
+            CurrentCharacterListPage.Instance?.LoadCharacters(false);
+
+            GoBack();
+        }
+
+        private void SaveValues()
+        {
             EditingCharacter.Name = characterNameTextBox.Text;
             EditingCharacter.Species = (Species)SpeciesComboBox.SelectedItem;
 
@@ -61,12 +72,6 @@ namespace RPG
             if (SkillLevelHelper.ParseEnum(VitalityLabel.Content.ToString() ?? string.Empty, out SkillLevel? vitality) && vitality != null) EditingCharacter.Vitality = (SkillLevel)vitality;
             if (SkillLevelHelper.ParseEnum(MagicLabel.Content.ToString() ?? string.Empty, out SkillLevel? magic) && magic != null) EditingCharacter.Magic = (SkillLevel)magic;
             if (SkillLevelHelper.ParseEnum(SpeedLabel.Content.ToString() ?? string.Empty, out SkillLevel? speed) && speed != null) EditingCharacter.Speed = (SkillLevel)speed;
-
-            Main.Characters.Add(EditingCharacter);
-            CharacterListPage.SaveCharacters();
-            CurrentCharacterListPage.Instance?.LoadCharacters(false);
-
-            GoBack();
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e) => GoBack();
@@ -144,6 +149,18 @@ namespace RPG
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            SaveValues();
+
+            Main.Characters.Remove(EditingCharacter);
+
+            CharacterListPage.SaveCharacters();
+            CurrentCharacterListPage.Instance?.LoadCharacters(false);
+
+            GoBack();
         }
     }
 }
