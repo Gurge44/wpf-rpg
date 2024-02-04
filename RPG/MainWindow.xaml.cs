@@ -34,6 +34,7 @@ namespace RPG
             NewGameButton.Visibility = Visibility.Hidden;
             LoadGameButton.Visibility = Visibility.Hidden;
             ManageCharactersButton.Visibility = Visibility.Hidden;
+            QuitButton.Visibility = Visibility.Hidden;
 
             CharacterListPage listPage;
             if (CurrentCharacterListPage.Instance != null)

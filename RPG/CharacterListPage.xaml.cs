@@ -20,16 +20,16 @@ namespace RPG
         }
         public void LoadCharacters(bool firstLoad)
         {
-            if (firstLoad) Main.Characters = [];
+            Main.Characters.Clear();
             CharacterGrid.Children.RemoveRange(1, CharacterGrid.Children.Count - 1);
 
-            if (File.Exists(filePath))
+            try
             {
                 string[] lines = File.ReadAllLines(filePath);
 
                 foreach (string line in lines)
                 {
-                    string[] values = line.Split(',');
+                    string[] values = line.Split('*');
 
                     if (values.Length == 8)
                     {
@@ -48,10 +48,7 @@ namespace RPG
                     }
                 }
             }
-            else
-            {
-                File.CreateText(filePath);
-            }
+            catch { }
 
             (int Column, int Row) = (0, 1);
             foreach (var character in Main.Characters)
@@ -104,6 +101,7 @@ namespace RPG
                 CurrentMainWindow.Instance.NewGameButton.Visibility = Visibility.Visible;
                 CurrentMainWindow.Instance.LoadGameButton.Visibility = Visibility.Visible;
                 CurrentMainWindow.Instance.ManageCharactersButton.Visibility = Visibility.Visible;
+                CurrentMainWindow.Instance.QuitButton.Visibility = Visibility.Visible;
             }
 
             characterButtonPanel.Visibility = Visibility.Hidden;

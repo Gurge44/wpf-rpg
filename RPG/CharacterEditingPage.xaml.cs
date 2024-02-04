@@ -64,7 +64,7 @@ namespace RPG
 
         private void SaveValues()
         {
-            EditingCharacter.Name = characterNameTextBox.Text;
+            EditingCharacter.Name = characterNameTextBox.Text.Replace("*", string.Empty);
             EditingCharacter.Species = (Species)SpeciesComboBox.SelectedItem;
 
             if (SkillLevelHelper.ParseEnum(StrengthLabel.Content.ToString() ?? string.Empty, out SkillLevel? strength) && strength != null) EditingCharacter.Strength = (SkillLevel)strength;
