@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace RPG
 {
@@ -57,7 +48,7 @@ namespace RPG
 
             if (!Main.Characters.Any(x => x.Equals(EditingCharacter))) Main.Characters.Add(EditingCharacter);
             CharacterListPage.SaveCharacters();
-            CurrentCharacterListPage.Instance?.LoadCharacters(false);
+            CurrentCharacterListPage.Instance?.LoadCharacters();
 
             GoBack();
         }
@@ -162,7 +153,7 @@ namespace RPG
             Main.Characters.Remove(EditingCharacter);
 
             CharacterListPage.SaveCharacters();
-            CurrentCharacterListPage.Instance?.LoadCharacters(false);
+            CurrentCharacterListPage.Instance?.LoadCharacters();
 
             GoBack();
         }

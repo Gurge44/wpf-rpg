@@ -11,7 +11,8 @@
         Quicksylph,
         Mysticore,
         Ironheart,
-        Fleetspell
+        Fleetspell,
+        Enemy
     }
     public static class SpeciesHelper
     {

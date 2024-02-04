@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Diagnostics.Eventing.Reader;
 
 namespace RPG
 {
@@ -37,6 +36,11 @@ namespace RPG
             }
             return false;
         }
+        /// <summary>
+        /// Gets the default Speed for the specified <paramref name="species"/>. In case of an Enemy, this method returns Average.
+        /// </summary>
+        /// <param name="species">The species that determines the default speed.</param>
+        /// <returns>The default speed based on the given <paramref name="species"/> in SkillLevel.</returns>
         public static SkillLevel GetDefaultStrength(Species species) => species switch
         {
             Species.Stonekin => SkillLevel.VeryHigh,
@@ -51,6 +55,11 @@ namespace RPG
             Species.Fleetspell => SkillLevel.Low,
             _ => SkillLevel.Average,
         };
+        /// <summary>
+        /// Gets the default Speed for the specified <paramref name="species"/>.
+        /// </summary>
+        /// <param name="species">The species that determines the default speed.</param> In case of an Enemy, this method returns Average.
+        /// <returns>The default speed based on the given <paramref name="species"/> in SkillLevel.</returns>
         public static SkillLevel GetDefaultDexterity(Species species) => species switch
         {
             Species.Stonekin => SkillLevel.Low,
@@ -65,6 +74,11 @@ namespace RPG
             Species.Fleetspell => SkillLevel.VeryLow,
             _ => SkillLevel.Average,
         };
+        /// <summary>
+        /// Gets the default Speed for the specified <paramref name="species"/>.
+        /// </summary>
+        /// <param name="species">The species that determines the default speed.</param> In case of an Enemy, this method returns Average.
+        /// <returns>The default speed based on the given <paramref name="species"/> in SkillLevel.</returns>
         public static SkillLevel GetDefaultVitality(Species species) => species switch
         {
             Species.Stonekin => SkillLevel.High,
@@ -79,6 +93,11 @@ namespace RPG
             Species.Fleetspell => SkillLevel.Average,
             _ => SkillLevel.Average,
         };
+        /// <summary>
+        /// Gets the default Speed for the specified <paramref name="species"/>.
+        /// </summary>
+        /// <param name="species">The species that determines the default speed.</param> In case of an Enemy, this method returns Average.
+        /// <returns>The default speed based on the given <paramref name="species"/> in SkillLevel.</returns>
         public static SkillLevel GetDefaultMagic(Species species) => species switch
         {
             Species.Stonekin => SkillLevel.VeryLow,
@@ -93,6 +112,11 @@ namespace RPG
             Species.Fleetspell => SkillLevel.High,
             _ => SkillLevel.Average,
         };
+        /// <summary>
+        /// Gets the default Speed for the specified <paramref name="species"/>.
+        /// </summary>
+        /// <param name="species">The species that determines the default speed.</param> In case of an Enemy, this method returns Average.
+        /// <returns>The default speed based on the given <paramref name="species"/> in SkillLevel.</returns>
         public static SkillLevel GetDefaultSpeed(Species species) => species switch
         {
             Species.Stonekin => SkillLevel.Average,

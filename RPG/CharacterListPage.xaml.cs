@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace RPG
 {
@@ -15,10 +16,10 @@ namespace RPG
         public CharacterListPage()
         {
             InitializeComponent();
-            LoadCharacters(true);
+            LoadCharacters();
             CurrentCharacterListPage.Instance = this;
         }
-        public void LoadCharacters(bool firstLoad)
+        public void LoadCharacters()
         {
             Main.Characters.Clear();
             CharacterGrid.Children.RemoveRange(1, CharacterGrid.Children.Count - 1);
@@ -55,27 +56,43 @@ namespace RPG
             {
                 Button characterButton = new()
                 {
-                    Content = character.Name == string.Empty ? "Unnamed" : character.Name,
                     Tag = character,
                     Style = AddCharacterButton.Style,
                     Padding = new Thickness(10, 10, 10, 10),
-                    Margin = new Thickness(20, 0, 20, 5),
+                    Margin = new Thickness(20, 0, 20, 30),
                     MinWidth = 50,
                     Visibility = Visibility.Visible,
-                    FontSize = 20
+                    FontSize = 10,
                 };
                 characterButton.Click += CharacterButton_Click;
+
+                if (character.IsEnemy) characterButton.Foreground = new SolidColorBrush(Colors.Red);
+
+
+                StackPanel buttonContent = new() { Orientation = Orientation.Vertical };
+
+
+                // Add the image
+                Image characterImage = new() { Source = new BitmapImage(new Uri(character.ImageURL)), Width = 110, Margin = new Thickness(2, 2, 2, 2) };
+                buttonContent.Children.Add(characterImage);
+
+                // Add the text content
+                TextBlock characterText = new() { Text = character.Name == string.Empty ? "Unnamed" : character.Name, HorizontalAlignment = HorizontalAlignment.Center };
+                buttonContent.Children.Add(characterText);
+
+                characterButton.Content = buttonContent;
+
 
                 characterButton.SetValue(Grid.ColumnProperty, Column); Grid.SetColumn(characterButton, Column);
                 characterButton.SetValue(Grid.RowProperty, Row); Grid.SetRow(characterButton, Row);
 
                 Column++;
-                if (Column > 3)
+                if (Column > 6)
                 {
                     Row++;
                     Column = 0;
-                    if (Row > 4) break;
                 }
+                if (Row == 3 && Column == 5) break;
 
                 CharacterGrid.Children.Add(characterButton);
             }

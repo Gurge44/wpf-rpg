@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 
 namespace RPG
 {
@@ -18,6 +13,8 @@ namespace RPG
         public static HashSet<string> ImageURLs { get => imageURLs; set => imageURLs = value; }
         public static HashSet<string> RandomNames { get => randomNames; set => randomNames = value; }
         public static Random Random { get => random; set => random = value; }
+
+        public static HashSet<Character>? Enemies => characters.Where(x => x.Species == Species.Enemy)?.ToHashSet();
 
         public static void LoadResources()
         {

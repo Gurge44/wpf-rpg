@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RPG
+﻿namespace RPG
 {
     public class Character(string name, Species species, SkillLevel strength, SkillLevel dexterity, SkillLevel vitality, SkillLevel magic, SkillLevel speed, string imageURL)
     {
@@ -25,6 +19,8 @@ namespace RPG
             Magic = SkillLevelHelper.GetDefaultMagic(Species);
             Speed = SkillLevelHelper.GetDefaultSpeed(Species);
         }
+
+        public bool IsEnemy => Species == Species.Enemy;
 
         public override string ToString() => string.Join('*', [Name, $"{(int)Species}", $"{(int)Strength}", $"{(int)Dexterity}", $"{(int)Vitality}", $"{(int)Magic}", $"{(int)Speed}", ImageURL]);
 
