@@ -53,6 +53,49 @@
             </Setter>
         </Style>
 
+        <Style x:Key="BackButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource CommonBackgroundBrush}"/>
+            <Setter Property="Foreground" Value="#6982ef"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Grid.RenderTransform>
+                                <ScaleTransform x:Name="scaleTransform" ScaleX="1" ScaleY="1"/>
+                            </Grid.RenderTransform>
+                            <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <!-- Scale to 120% when hovering -->
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="scaleTransform" Storyboard.TargetProperty="ScaleX" To="1.2" Duration="0:0:0.2"/>
+                                            <DoubleAnimation Storyboard.TargetName="scaleTransform" Storyboard.TargetProperty="ScaleY" To="1.2" Duration="0:0:0.2"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Setter Property="Background" Value="#6982ef"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                                <Trigger.ExitActions>
+                                    <!-- Return to normal size when not hovering -->
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="scaleTransform" Storyboard.TargetProperty="ScaleX" To="1" Duration="0:0:0.2"/>
+                                            <DoubleAnimation Storyboard.TargetName="scaleTransform" Storyboard.TargetProperty="ScaleY" To="1" Duration="0:0:0.2"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <Style x:Key="CustomLabelStyle" TargetType="Label">
             <Setter Property="Background" Value="{StaticResource CommonBackgroundBrush}"/>
             <Setter Property="Foreground" Value="White"/>
@@ -112,27 +155,40 @@
             <ImageBrush ImageSource="cs2.jpg"/>
         </Grid.Background>
         
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        
         <StackPanel x:Name="characterButtonPanel" Orientation="Horizontal" HorizontalAlignment="Left" Margin="20,20,0,0" VerticalAlignment="Top">
-            <Button Style="{StaticResource CustomButtonStyle}" Name="AddCharacterButton" Content="+" Click="AddCharacter_Click" FontWeight="Black" FontSize="44" Width="90" Height="85" Margin="20,0,20,5"/>
+            
+            <Grid x:Name="CharacterGrid">
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Button Style="{StaticResource CustomButtonStyle}" Name="AddCharacterButton" Width="90" Click="AddCharacter_Click" Margin="20,0,20,20" HorizontalAlignment="Left">
+                    <Image Source="add.png" Width="70" Margin="10,10,10,10"/>
+                </Button>
+
+            </Grid>
+            
         </StackPanel>
 
-        <Button Style="{StaticResource CustomButtonStyle}" Content=" BACK TO MAIN MENU " Grid.Row="5" Grid.Column="3" HorizontalContentAlignment="Center" Margin="0,0,60,60" Click="BackButton_Click" Name="BackButton"/>
-        
+        <Button Style="{StaticResource BackButtonStyle}" HorizontalContentAlignment="Center" Margin="0,0,80,60" Click="BackButton_Click" Name="BackButton" HorizontalAlignment="Right" VerticalAlignment="Bottom" MouseEnter="BackButton_MouseEnter" MouseLeave="BackButton_MouseLeave">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="return.png" Width="30" Margin="5,0,0,0"/>
+                <Label Content=" BACK TO MAIN MENU " Name="BackLabel" FontWeight="SemiBold" Foreground="#6982ef"/>
+            </StackPanel>
+        </Button>
+
     </Grid>
 </Page>

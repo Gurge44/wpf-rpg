@@ -1,6 +1,8 @@
 ﻿using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
 
 namespace RPG
 {
@@ -19,7 +21,7 @@ namespace RPG
         public void LoadCharacters(bool firstLoad)
         {
             if (firstLoad) Main.Characters = [];
-            else characterButtonPanel.Children.RemoveRange(1, characterButtonPanel.Children.Count - 1);
+            CharacterGrid.Children.RemoveRange(1, CharacterGrid.Children.Count - 1);
 
             if (File.Exists(filePath))
             {
@@ -51,7 +53,7 @@ namespace RPG
                 File.CreateText(filePath);
             }
 
-            (int Column, int Row) = (1, 0);
+            (int Column, int Row) = (0, 1);
             foreach (var character in Main.Characters)
             {
                 Button characterButton = new()
@@ -78,14 +80,11 @@ namespace RPG
                     if (Row > 4) break;
                 }
 
-                characterButtonPanel.Children.Add(characterButton);
+                CharacterGrid.Children.Add(characterButton);
             }
         }
 
-        public static void SaveCharacters()
-        {
-            File.WriteAllLines(filePath, Main.Characters.Select(x => x.ToString() ?? string.Empty));
-        }
+        public static void SaveCharacters() => File.WriteAllLines(filePath, Main.Characters.Select(x => x.ToString() ?? string.Empty));
 
         private void CharacterButton_Click(object sender, RoutedEventArgs e)
         {
@@ -95,10 +94,7 @@ namespace RPG
             }
         }
 
-        private void AddCharacter_Click(object sender, RoutedEventArgs e)
-        {
-            CurrentMainWindow.Instance?.NavigateToEditingPage(CharacterHelper.GetDefaultCharacter());
-        }
+        private void AddCharacter_Click(object sender, RoutedEventArgs e) => CurrentMainWindow.Instance?.NavigateToEditingPage(CharacterHelper.GetDefaultCharacter());
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
@@ -111,10 +107,15 @@ namespace RPG
             }
 
             characterButtonPanel.Visibility = Visibility.Hidden;
+            CharacterGrid.Visibility = Visibility.Hidden;
             BackButton.Visibility = Visibility.Hidden;
 
             SaveCharacters();
         }
+
+        private void BackButton_MouseEnter(object sender, MouseEventArgs e) => BackLabel.Foreground = new SolidColorBrush(Colors.Black);
+
+        private void BackButton_MouseLeave(object sender, MouseEventArgs e) => BackLabel.Foreground = new SolidColorBrush(Color.FromRgb(105, 130, 239));
     }
 
     public static class CurrentCharacterListPage

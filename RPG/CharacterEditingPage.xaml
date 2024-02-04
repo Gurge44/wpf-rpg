@@ -96,44 +96,6 @@
             </Setter>
         </Style>
 
-        <Style x:Key="CancelLabelStyle" TargetType="Label">
-            <Setter Property="Foreground" Value="#fdbb0e"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Label">
-                        <Border>
-                            <ContentPresenter/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Foreground" Value="Black"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-
-        <Style x:Key="DeleteLabelStyle" TargetType="Label">
-            <Setter Property="Foreground" Value="Red"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Label">
-                        <Border>
-                            <ContentPresenter/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Foreground" Value="Black"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-
         <Style x:Key="DeleteButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="{StaticResource CommonBackgroundBrush}"/>
             <Setter Property="Foreground" Value="Red"/>
@@ -160,6 +122,49 @@
                                     </BeginStoryboard>
                                 </Trigger.EnterActions>
                                 <Setter Property="Background" Value="Red"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                                <Trigger.ExitActions>
+                                    <!-- Return to normal size when not hovering -->
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="scaleTransform" Storyboard.TargetProperty="ScaleX" To="1" Duration="0:0:0.2"/>
+                                            <DoubleAnimation Storyboard.TargetName="scaleTransform" Storyboard.TargetProperty="ScaleY" To="1" Duration="0:0:0.2"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="SaveButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource CommonBackgroundBrush}"/>
+            <Setter Property="Foreground" Value="LimeGreen"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Grid.RenderTransform>
+                                <ScaleTransform x:Name="scaleTransform" ScaleX="1" ScaleY="1"/>
+                            </Grid.RenderTransform>
+                            <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <!-- Scale to 120% when hovering -->
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="scaleTransform" Storyboard.TargetProperty="ScaleX" To="1.2" Duration="0:0:0.2"/>
+                                            <DoubleAnimation Storyboard.TargetName="scaleTransform" Storyboard.TargetProperty="ScaleY" To="1.2" Duration="0:0:0.2"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Setter Property="Background" Value="LimeGreen"/>
                                 <Setter Property="Foreground" Value="Black"/>
                                 <Trigger.ExitActions>
                                     <!-- Return to normal size when not hovering -->
@@ -334,22 +339,27 @@
         </StackPanel>
 
         <StackPanel Grid.Row="7" Orientation="Horizontal">
-            <Button Style="{StaticResource CancelButtonStyle}" HorizontalAlignment="Left" Margin="60,0,0,60" Click="CancelButton_Click" MinWidth="140">
+            <Button Style="{StaticResource CancelButtonStyle}" Margin="60,0,0,40" HorizontalAlignment="Left" MinWidth="140" Name="CancelButton" Click="CancelButton_Click" MouseEnter="CancelButton_MouseEnter" MouseLeave="CancelButton_MouseLeave">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="cancel.png" Margin="2,2,2,2"/>
-                    <Label Style="{StaticResource CancelLabelStyle}" Content=" CANCEL "/>
+                    <Image Source="cancel.png" Width="25" Margin="5,0,0,0"/>
+                    <Label Content=" CANCEL " Name="CancelLabel" FontWeight="SemiBold" Foreground="#fdbb0e"/>
                 </StackPanel>
             </Button>
-            <Button Style="{StaticResource DeleteButtonStyle}" HorizontalAlignment="Left" Margin="60,0,0,60" Click="DeleteButton_Click" MinWidth="140">
+            <Button Style="{StaticResource DeleteButtonStyle}" Margin="60,0,0,40" HorizontalAlignment="Left" MinWidth="140" Name="DeleteButton" Click="DeleteButton_Click" MouseEnter="DeleteButton_MouseEnter" MouseLeave="DeleteButton_MouseLeave">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="delete.png" Margin="2,2,2,2"/>
-                    <Label Style="{StaticResource DeleteLabelStyle}" Content=" DELETE "/>
+                    <Image Source="delete.png" Width="25"/>
+                    <Label Content=" DELETE " Name="DeleteLabel" FontWeight="SemiBold" Foreground="Red"/>
                 </StackPanel>
             </Button>
         </StackPanel>
 
         <StackPanel Grid.Column="1" Grid.Row="7">
-            <Button Style="{StaticResource CustomButtonStyle}" Content="   SAVE CHARACTER   " HorizontalAlignment="Right" HorizontalContentAlignment="Right" Margin="0,0,60,60" Click="SaveButton_Click"/>
+            <Button Style="{StaticResource SaveButtonStyle}" HorizontalAlignment="Right" HorizontalContentAlignment="Right" Margin="0,0,60,60" Name="SaveButton" Click="SaveButton_Click" MouseEnter="SaveButton_MouseEnter" MouseLeave="SaveButton_MouseLeave">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="save.png" Width="30" Margin="5,0,0,0"/>
+                    <Label Content=" SAVE CHARACTER " Name="SaveLabel" FontWeight="SemiBold" Foreground="LimeGreen"/>
+                </StackPanel>
+            </Button>
         </StackPanel>
 
     </Grid>

@@ -55,7 +55,7 @@ namespace RPG
         {
             SaveValues();
 
-            Main.Characters.Add(EditingCharacter);
+            if (!Main.Characters.Any(x => x.Equals(EditingCharacter))) Main.Characters.Add(EditingCharacter);
             CharacterListPage.SaveCharacters();
             CurrentCharacterListPage.Instance?.LoadCharacters(false);
 
@@ -72,6 +72,8 @@ namespace RPG
             if (SkillLevelHelper.ParseEnum(VitalityLabel.Content.ToString() ?? string.Empty, out SkillLevel? vitality) && vitality != null) EditingCharacter.Vitality = (SkillLevel)vitality;
             if (SkillLevelHelper.ParseEnum(MagicLabel.Content.ToString() ?? string.Empty, out SkillLevel? magic) && magic != null) EditingCharacter.Magic = (SkillLevel)magic;
             if (SkillLevelHelper.ParseEnum(SpeedLabel.Content.ToString() ?? string.Empty, out SkillLevel? speed) && speed != null) EditingCharacter.Speed = (SkillLevel)speed;
+
+            EditingCharacter.ImageURL = characterImage.Source.ToString();
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e) => GoBack();
@@ -151,8 +153,10 @@ namespace RPG
             }
         }
 
-        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        private async void DeleteCharacterAsync()
         {
+            await Task.Delay(1);
+
             SaveValues();
 
             Main.Characters.Remove(EditingCharacter);
@@ -162,5 +166,19 @@ namespace RPG
 
             GoBack();
         }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e) => DeleteCharacterAsync();
+
+        private void DeleteButton_MouseEnter(object sender, MouseEventArgs e) => DeleteLabel.Foreground = new SolidColorBrush(Colors.Black);
+
+        private void DeleteButton_MouseLeave(object sender, MouseEventArgs e) => DeleteLabel.Foreground = new SolidColorBrush(Colors.Red);
+
+        private void CancelButton_MouseEnter(object sender, MouseEventArgs e) => CancelLabel.Foreground = new SolidColorBrush(Colors.Black);
+
+        private void CancelButton_MouseLeave(object sender, MouseEventArgs e) => CancelLabel.Foreground = new SolidColorBrush(Color.FromRgb(253, 187, 14));
+
+        private void SaveButton_MouseEnter(object sender, MouseEventArgs e) => SaveLabel.Foreground = new SolidColorBrush(Colors.Black);
+
+        private void SaveButton_MouseLeave(object sender, MouseEventArgs e) => SaveLabel.Foreground = new SolidColorBrush(Colors.LimeGreen);
     }
 }

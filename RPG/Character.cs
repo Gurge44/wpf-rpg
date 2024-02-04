@@ -27,6 +27,15 @@ namespace RPG
         }
 
         public override string ToString() => string.Join(',', [Name, $"{(int)Species}", $"{(int)Strength}", $"{(int)Dexterity}", $"{(int)Vitality}", $"{(int)Magic}", $"{(int)Speed}", ImageURL]);
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is not Character x) return base.Equals(obj);
+            if (obj is null) return false;
+            return Species == x.Species && Strength == x.Strength && Dexterity == x.Dexterity && Vitality == x.Vitality && Magic == x.Magic && Speed == x.Speed;
+        }
+
+        public override int GetHashCode() => Name.ToCharArray().Sum(x => x) + base.GetHashCode();
     }
     public static class CharacterHelper
     {

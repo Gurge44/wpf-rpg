@@ -41,7 +41,9 @@ namespace RPG
                 listPage = CurrentCharacterListPage.Instance;
 
                 listPage.AddCharacterButton.Visibility = Visibility.Visible;
+                listPage.CharacterGrid.Visibility = Visibility.Visible;
                 listPage.characterButtonPanel.Visibility = Visibility.Visible;
+                listPage.BackButton.Visibility = Visibility.Visible;
             }
             else
             {
@@ -49,6 +51,12 @@ namespace RPG
             }
             Frame.NavigationService.Navigate(listPage);
         }
+
+        private void QuitButton_MouseEnter(object sender, MouseEventArgs e) => QuitLabel.Foreground = new SolidColorBrush(Colors.Black);
+
+        private void QuitButton_MouseLeave(object sender, MouseEventArgs e) => QuitLabel.Foreground = new SolidColorBrush(Colors.White);
+
+        private void QuitButton_Click(object sender, RoutedEventArgs e) => Close();
     }
 
     public static class CurrentMainWindow

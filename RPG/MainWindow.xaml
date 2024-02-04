@@ -138,8 +138,13 @@
             <Button Style="{StaticResource CustomButtonStyle}" Width="500" Height="44" x:Name="ManageCharactersButton" Content=" MANAGE CHARACTERS " HorizontalAlignment="Center" VerticalAlignment="Center" Click="ManageCharactersButton_Click"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="4">
-            
+        <StackPanel Grid.Row="4" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,50,70,0">
+            <Button Style="{StaticResource CustomButtonStyle}" Height="44" Name="QuitButton" HorizontalAlignment="Right" VerticalAlignment="Bottom" MouseEnter="QuitButton_MouseEnter" MouseLeave="QuitButton_MouseLeave" Click="QuitButton_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="quit.png" Width="50"/>
+                    <Label Content=" QUIT GAME " Name="QuitLabel" Foreground="White" FontWeight="SemiBold"/>
+                </StackPanel>
+            </Button>
         </StackPanel>
 
         <StackPanel Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Bottom">
