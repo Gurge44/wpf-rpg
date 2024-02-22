@@ -9,23 +9,8 @@
       Title="ChooseToFight" Background="White">
 
     <Grid>
-        <ListBox ItemsSource="{Binding Characters}" HorizontalContentAlignment="Stretch">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Border BorderBrush="Black" BorderThickness="1" Margin="5" Padding="5">
-                        <StackPanel>
-                            <!-- Character Image -->
-                            <Image Source="{Binding ImageURL}" Width="100" Height="100" />
-
-                            <!-- Character Name -->
-                            <TextBlock Text="{Binding Name}" FontWeight="Bold" />
-
-                            <!-- Other Character Information -->
-                            <!-- Add more TextBlocks or other controls as needed -->
-                        </StackPanel>
-                    </Border>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <Grid x:Name="main_grid">
+            
+        </Grid>
     </Grid>
 </Window>
