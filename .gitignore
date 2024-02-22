@@ -8,3 +8,6 @@
 /RPG/bin/Debug/net8.0-windows
 /RPG/obj/Debug/net8.0-windows/refint
 /RPG/obj/Debug/net8.0-windows/ref
+/RPG/obj/Debug/net8.0-windows
+/RPG/obj
+/.vs/wpf-rpg/v17
