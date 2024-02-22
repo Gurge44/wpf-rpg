@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -52,6 +53,16 @@ namespace RPG
         private void QuitButton_MouseLeave(object sender, MouseEventArgs e) => QuitLabel.Foreground = new SolidColorBrush(Colors.White);
 
         private void QuitButton_Click(object sender, RoutedEventArgs e) => Close();
+
+        private void NewGameButton_Click(object sender, RoutedEventArgs e)
+        {
+            var x = new ChooseToFight
+            {
+                WindowStartupLocation = WindowStartupLocation.CenterScreen
+            };
+            x.Show();
+            this.Close();
+        }
     }
 
     public static class CurrentMainWindow

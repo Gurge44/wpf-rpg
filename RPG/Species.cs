@@ -2,6 +2,7 @@
 {
     public enum Species
     {
+        Human,
         Stonekin,
         Swiftlings,
         Vitaleons,

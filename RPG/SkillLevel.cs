@@ -10,7 +10,8 @@ namespace RPG
         Average,
         High,
         [Description("Very High")]
-        VeryHigh
+        VeryHigh,
+        Boss
     }
     public static class SkillLevelHelper
     {

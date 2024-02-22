@@ -37,7 +37,7 @@
     {
         public static Character GetDefaultCharacter()
         {
-            var character = new Character(string.Empty, Species.Stonekin, SkillLevel.Average, SkillLevel.Average, SkillLevel.Average, SkillLevel.Average, SkillLevel.Average, string.Empty);
+            var character = new Character(string.Empty, Species.Human, SkillLevel.Average, SkillLevel.Average, SkillLevel.Average, SkillLevel.Average, SkillLevel.Average, string.Empty);
             character.SetAllValuesToDefault();
             return character;
         }

@@ -287,7 +287,7 @@
 
         <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
             <Label Style="{StaticResource CustomLabelStyle}" Content=" Species: " Margin="0,0,40,0" Width="210" Height="44"/>
-            <ComboBox Style="{StaticResource CustomComboBoxStyle}" Width="300" Height="44" Name="SpeciesComboBox" Background="{StaticResource CommonBackgroundBrush}" Foreground="White"/>
+            <ComboBox Style="{StaticResource CustomComboBoxStyle}" Width="300" Height="44" Name="SpeciesComboBox" Background="{StaticResource CommonBackgroundBrush}" Foreground="White" SelectionChanged="SpeciesComboBox_SelectionChanged"/>
             <Button Style="{StaticResource CustomButtonStyle}" Margin="10,0,0,0" Height="44" Width="44" Click="ResetButton_Click">
                 <Image Source="/reset.png" Width="40" Height="40"/>
             </Button>

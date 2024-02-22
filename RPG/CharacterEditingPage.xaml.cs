@@ -48,7 +48,9 @@ namespace RPG
 
             if (!Main.Characters.Any(x => x.Equals(EditingCharacter))) Main.Characters.Add(EditingCharacter);
             CharacterListPage.SaveCharacters();
-            CurrentCharacterListPage.Instance?.LoadCharacters();
+
+            var listPage = CurrentCharacterListPage.Instance;
+            if (listPage != null) Main.LoadCharacters(listPage.CharacterGrid, Main.filePath, listPage.AddCharacterButton.Style, listPage.CharacterButton_Click);
 
             GoBack();
         }
@@ -82,25 +84,26 @@ namespace RPG
 
         private void UpdateValue(bool increase, Properties properties)
         {
+            var species = (Species)SpeciesComboBox.SelectedItem;
             switch (properties)
             {
                 case Properties.Strength when SkillLevelHelper.ParseEnum(StrengthLabel.Content.ToString() ?? string.Empty, out var skillLevel) && skillLevel != null:
-                    StrengthLabel.Content = GetValue((SkillLevel)skillLevel);
+                    StrengthLabel.Content = GetValue((SkillLevel)skillLevel, species);
                     break;
                 case Properties.Dexterity when SkillLevelHelper.ParseEnum(DexterityLabel.Content.ToString() ?? string.Empty, out var skillLevel) && skillLevel != null:
-                    DexterityLabel.Content = GetValue((SkillLevel)skillLevel);
+                    DexterityLabel.Content = GetValue((SkillLevel)skillLevel, species);
                     break;
                 case Properties.Vitality when SkillLevelHelper.ParseEnum(VitalityLabel.Content.ToString() ?? string.Empty, out var skillLevel) && skillLevel != null:
-                    VitalityLabel.Content = GetValue((SkillLevel)skillLevel);
+                    VitalityLabel.Content = GetValue((SkillLevel)skillLevel, species);
                     break;
                 case Properties.Magic when SkillLevelHelper.ParseEnum(MagicLabel.Content.ToString() ?? string.Empty, out var skillLevel) && skillLevel != null:
-                    MagicLabel.Content = GetValue((SkillLevel)skillLevel);
+                    MagicLabel.Content = GetValue((SkillLevel)skillLevel, species);
                     break;
                 case Properties.Speed when SkillLevelHelper.ParseEnum(SpeedLabel.Content.ToString() ?? string.Empty, out var skillLevel) && skillLevel != null:
-                    SpeedLabel.Content = GetValue((SkillLevel)skillLevel);
+                    SpeedLabel.Content = GetValue((SkillLevel)skillLevel, species);
                     break;
             }
-            string GetValue(SkillLevel beforeValue) => ((SkillLevel)Math.Clamp((int)(increase ? ++beforeValue : --beforeValue), (int)SkillLevel.VeryLow, (int)SkillLevel.VeryHigh)).GetDescription();
+            string GetValue(SkillLevel beforeValue, Species species) => ((SkillLevel)Math.Clamp((int)(increase ? ++beforeValue : --beforeValue), species == Species.Human ? (int)SkillLevel.Low : (int)SkillLevel.VeryLow, species == Species.Human ? (int)SkillLevel.High : (int)SkillLevel.VeryHigh)).GetDescription();
         }
 
         private void StrengthButtonPlus_Click(object sender, RoutedEventArgs e) => UpdateValue(true, Properties.Strength);
@@ -122,9 +125,32 @@ namespace RPG
 
         private void ResetButton_Click(object sender, RoutedEventArgs e)
         {
-            EditingCharacter.Species = (Species)SpeciesComboBox.SelectedItem;
+            ResetValues();
+        }
+
+        private void ResetValues()
+        {
+            var species = (Species)SpeciesComboBox.SelectedItem;
+
+            EditingCharacter.Species = species;
             EditingCharacter.SetAllValuesToDefault();
             SetValues();
+
+            DisableButtons(species is Species.Human or Species.Enemy);
+        }
+
+        private void DisableButtons(bool enabled)
+        {
+            StrengthButtonMinus.IsEnabled = enabled;
+            StrengthButtonPlus.IsEnabled = enabled;
+            DexterityButtonMinus.IsEnabled = enabled;
+            DexterityButtonPlus.IsEnabled = enabled;
+            VitalityButtonMinus.IsEnabled = enabled;
+            VitalityButtonPlus.IsEnabled = enabled;
+            MagicButtonMinus.IsEnabled = enabled;
+            MagicButtonPlus.IsEnabled = enabled;
+            SpeedButtonMinus.IsEnabled = enabled;
+            SpeedButtonPlus.IsEnabled = enabled;
         }
 
         private void RandomImageButton_Click(object sender, RoutedEventArgs e) => SetRandomImage();
@@ -153,7 +179,9 @@ namespace RPG
             Main.Characters.Remove(EditingCharacter);
 
             CharacterListPage.SaveCharacters();
-            CurrentCharacterListPage.Instance?.LoadCharacters();
+
+            var listPage = CurrentCharacterListPage.Instance;
+            if (listPage != null) Main.LoadCharacters(listPage.CharacterGrid, Main.filePath, listPage.AddCharacterButton.Style, listPage.CharacterButton_Click);
 
             GoBack();
         }
@@ -171,5 +199,10 @@ namespace RPG
         private void SaveButton_MouseEnter(object sender, MouseEventArgs e) => SaveLabel.Foreground = new SolidColorBrush(Colors.Black);
 
         private void SaveButton_MouseLeave(object sender, MouseEventArgs e) => SaveLabel.Foreground = new SolidColorBrush(Colors.LimeGreen);
+
+        private void SpeciesComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ResetValues();
+        }
     }
 }

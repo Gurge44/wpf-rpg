@@ -26,11 +26,11 @@
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Trigger.EnterActions>
-                                    <!-- Scale to 120% when hovering -->
+                                    <!-- Scale to 105% when hovering -->
                                     <BeginStoryboard>
                                         <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetName="scaleTransform" Storyboard.TargetProperty="ScaleX" To="1.2" Duration="0:0:0.2"/>
-                                            <DoubleAnimation Storyboard.TargetName="scaleTransform" Storyboard.TargetProperty="ScaleY" To="1.2" Duration="0:0:0.2"/>
+                                            <DoubleAnimation Storyboard.TargetName="scaleTransform" Storyboard.TargetProperty="ScaleX" To="1.05" Duration="0:0:0.2"/>
+                                            <DoubleAnimation Storyboard.TargetName="scaleTransform" Storyboard.TargetProperty="ScaleY" To="1.05" Duration="0:0:0.2"/>
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </Trigger.EnterActions>
@@ -127,7 +127,7 @@
         </StackPanel>
 
         <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-            <Button Style="{StaticResource CustomButtonStyle}" Width="500" Height="44" x:Name="NewGameButton" Content=" NEW GAME " HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Button Click="NewGameButton_Click" Style="{StaticResource CustomButtonStyle}" Width="500" Height="44" x:Name="NewGameButton" Content=" NEW GAME " HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </StackPanel>
 
         <StackPanel Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
