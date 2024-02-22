@@ -117,5 +117,17 @@ namespace RPG
                 grid.Children.Add(characterButton);
             }
         }
+
+        public static void SetMainWindowContents(Visibility visibility)
+        {
+            var mainwindow = CurrentMainWindow.Instance;
+            if (mainwindow == null) return;
+
+            mainwindow.TitleLabel.Visibility = visibility;
+            mainwindow.NewGameButton.Visibility = visibility;
+            mainwindow.LoadGameButton.Visibility = visibility;
+            mainwindow.ManageCharactersButton.Visibility = visibility;
+            mainwindow.QuitButton.Visibility = visibility;
+        }
     }
 }

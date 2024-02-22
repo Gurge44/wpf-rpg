@@ -25,11 +25,7 @@ namespace RPG
 
         private void ManageCharactersButton_Click(object sender, RoutedEventArgs e)
         {
-            TitleLabel.Visibility = Visibility.Hidden;
-            NewGameButton.Visibility = Visibility.Hidden;
-            LoadGameButton.Visibility = Visibility.Hidden;
-            ManageCharactersButton.Visibility = Visibility.Hidden;
-            QuitButton.Visibility = Visibility.Hidden;
+            Main.SetMainWindowContents(Visibility.Hidden);
 
             CharacterListPage listPage;
             if (CurrentCharacterListPage.Instance != null)

@@ -33,14 +33,7 @@ namespace RPG
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            if (CurrentMainWindow.Instance != null)
-            {
-                CurrentMainWindow.Instance.TitleLabel.Visibility = Visibility.Visible;
-                CurrentMainWindow.Instance.NewGameButton.Visibility = Visibility.Visible;
-                CurrentMainWindow.Instance.LoadGameButton.Visibility = Visibility.Visible;
-                CurrentMainWindow.Instance.ManageCharactersButton.Visibility = Visibility.Visible;
-                CurrentMainWindow.Instance.QuitButton.Visibility = Visibility.Visible;
-            }
+            Main.SetMainWindowContents(Visibility.Visible);
 
             characterButtonPanel.Visibility = Visibility.Hidden;
             CharacterGrid.Visibility = Visibility.Hidden;
