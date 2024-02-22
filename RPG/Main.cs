@@ -46,7 +46,7 @@ namespace RPG
         /// <param name="handler">The method that runs when clicking on a character button in the grid</param>
         public static void LoadCharacters(Grid grid, string filePath, Style baseStyle, RoutedEventHandler handler)
         {
-            Main.Characters.Clear();
+            Characters.Clear();
             grid.Children.RemoveRange(1, grid.Children.Count - 1);
 
             try
@@ -70,14 +70,14 @@ namespace RPG
                             speed: (SkillLevel)int.Parse(values[6]),
                             imageURL: values[7]
                         );
-                        Main.Characters.Add(character);
+                        Characters.Add(character);
                     }
                 }
             }
             catch { }
 
             (int Column, int Row) = (0, 1);
-            foreach (var character in Main.Characters)
+            foreach (var character in Characters)
             {
                 Button characterButton = new()
                 {

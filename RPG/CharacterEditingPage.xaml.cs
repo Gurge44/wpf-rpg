@@ -88,22 +88,22 @@ namespace RPG
             switch (properties)
             {
                 case Properties.Strength when SkillLevelHelper.ParseEnum(StrengthLabel.Content.ToString() ?? string.Empty, out var skillLevel) && skillLevel != null:
-                    StrengthLabel.Content = GetValue((SkillLevel)skillLevel, species);
+                    StrengthLabel.Content = GetValue((SkillLevel)skillLevel);
                     break;
                 case Properties.Dexterity when SkillLevelHelper.ParseEnum(DexterityLabel.Content.ToString() ?? string.Empty, out var skillLevel) && skillLevel != null:
-                    DexterityLabel.Content = GetValue((SkillLevel)skillLevel, species);
+                    DexterityLabel.Content = GetValue((SkillLevel)skillLevel);
                     break;
                 case Properties.Vitality when SkillLevelHelper.ParseEnum(VitalityLabel.Content.ToString() ?? string.Empty, out var skillLevel) && skillLevel != null:
-                    VitalityLabel.Content = GetValue((SkillLevel)skillLevel, species);
+                    VitalityLabel.Content = GetValue((SkillLevel)skillLevel);
                     break;
                 case Properties.Magic when SkillLevelHelper.ParseEnum(MagicLabel.Content.ToString() ?? string.Empty, out var skillLevel) && skillLevel != null:
-                    MagicLabel.Content = GetValue((SkillLevel)skillLevel, species);
+                    MagicLabel.Content = GetValue((SkillLevel)skillLevel);
                     break;
                 case Properties.Speed when SkillLevelHelper.ParseEnum(SpeedLabel.Content.ToString() ?? string.Empty, out var skillLevel) && skillLevel != null:
-                    SpeedLabel.Content = GetValue((SkillLevel)skillLevel, species);
+                    SpeedLabel.Content = GetValue((SkillLevel)skillLevel);
                     break;
             }
-            string GetValue(SkillLevel beforeValue, Species species) => ((SkillLevel)Math.Clamp((int)(increase ? ++beforeValue : --beforeValue), species == Species.Human ? (int)SkillLevel.Low : (int)SkillLevel.VeryLow, species == Species.Human ? (int)SkillLevel.High : (int)SkillLevel.VeryHigh)).GetDescription();
+            string GetValue(SkillLevel beforeValue) => ((SkillLevel)Math.Clamp((int)(increase ? ++beforeValue : --beforeValue), species == Species.Human ? (int)SkillLevel.Low : (int)SkillLevel.VeryLow, species == Species.Human ? (int)SkillLevel.High : (int)SkillLevel.VeryHigh)).GetDescription();
         }
 
         private void StrengthButtonPlus_Click(object sender, RoutedEventArgs e) => UpdateValue(true, Properties.Strength);
