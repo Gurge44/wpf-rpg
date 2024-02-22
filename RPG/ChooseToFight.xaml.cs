@@ -13,19 +13,34 @@ namespace RPG
         public ChooseToFight()
         {
             InitializeComponent();
+            CreateMainGrid();
         }
 
-        public void FillContent()
+        public void CreateMainGrid()
         {
-
-
-            Grid grid = new()
+            //                               if null => new
+            CurrentCharacterListPage.Instance ??= new();
+            /*
+            foreach (var x in Main.Characters)
             {
-                Width = 50,
-                Height = 50,
-                Background = Brushes.Black
-            };
+                Grid grid = new Grid
+                {
+                    Children =
+                    {
+                        Label label = new Label
+                        {
+                            Content = x.Name
+                        };
+                    }
+                };
+            }*/
 
+            Main.LoadCharacters(main_grid, Main.filePath, null, CharacterClick);
+
+        }
+
+        public void CharacterClick(object sender, RoutedEventArgs e)
+        {
 
         }
 

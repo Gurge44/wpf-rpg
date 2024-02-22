@@ -16,6 +16,16 @@ namespace RPG
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+
+    public interface IFight
+    {
+        public int Damage { get; set;}
+        public int HP { get; set; }
+        void Fight();
+
+
+    }
+
     public partial class Fight : Window
     {
         public Fight()
@@ -25,6 +35,8 @@ namespace RPG
 
             Closing += OnClose;
         }
+
+        
 
         public void OnClose(object? sender, CancelEventArgs e)
         {
@@ -61,6 +73,5 @@ namespace RPG
         {
 
         }
-
     }
 }
