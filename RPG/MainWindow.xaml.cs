@@ -15,12 +15,58 @@ namespace RPG
         {
             InitializeComponent();
             CurrentMainWindow.Instance = this;
-            //NavigateToEditingPage(CharacterHelper.GetDefaultCharacter());
+            PlayIntro();
             Main.LoadResources();
         }
         public void NavigateToEditingPage(Character character)
         {
             Frame.NavigationService.Navigate(new CharacterEditingPage(character));
+        }
+
+        async void PlayIntro()
+        {
+            await Task.Delay(1);
+            Main.SetMainWindowContents(Visibility.Hidden);
+            MediaElement introPlayer = new()
+            {
+                Source = new Uri("intro.mp4", UriKind.Relative),
+                LoadedBehavior = MediaState.Play,
+                UnloadedBehavior = MediaState.Close,
+                Stretch = Stretch.Fill,
+                Width = 1280,
+                Height = 720
+            };
+            Grid.SetRowSpan(introPlayer, 6);
+            Button skipButton = new()
+            {
+                Content = "Skip",
+                HorizontalAlignment = HorizontalAlignment.Right,
+                VerticalAlignment = VerticalAlignment.Bottom,
+                Margin = new Thickness(0, 0, 10, 10),
+                Background = new SolidColorBrush(Colors.Black),
+                Foreground = new SolidColorBrush(Colors.White),
+                BorderBrush = new SolidColorBrush(Colors.White),
+                BorderThickness = new Thickness(1),
+                Padding = new Thickness(5),
+                FontSize = 20
+            };
+            skipButton.Click += (sender, e) =>
+            {
+                MainWindowGrid.Children.Remove(introPlayer);
+                MainWindowGrid.Children.Remove(skipButton);
+                Main.SetMainWindowContents(Visibility.Visible);
+            };
+            skipButton.MouseEnter += (sender, e) => skipButton.Foreground = new SolidColorBrush(Colors.Black);
+            skipButton.MouseLeave += (sender, e) => skipButton.Foreground = new SolidColorBrush(Colors.White);
+            Grid.SetRow(skipButton, 6);
+            MainWindowGrid.Children.Add(introPlayer);
+            MainWindowGrid.Children.Add(skipButton);
+            introPlayer.MediaEnded += (sender, e) =>
+            {
+                MainWindowGrid.Children.Remove(introPlayer);
+                MainWindowGrid.Children.Remove(skipButton);
+                Main.SetMainWindowContents(Visibility.Visible);
+            };
         }
 
         private void ManageCharactersButton_Click(object sender, RoutedEventArgs e)
@@ -57,7 +103,7 @@ namespace RPG
                 WindowStartupLocation = WindowStartupLocation.CenterScreen
             };
             x.Show();
-            this.Close();
+            Close();
         }
     }
 

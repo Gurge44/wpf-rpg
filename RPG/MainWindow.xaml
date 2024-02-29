@@ -105,7 +105,7 @@
 
     </Window.Resources>
 
-    <Grid>
+    <Grid x:Name="MainWindowGrid">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
@@ -115,11 +115,11 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions></Grid.ColumnDefinitions>
-        
+
         <Grid.Background>
             <ImageBrush ImageSource="cs2.jpg"/>
         </Grid.Background>
-        
+
         <Frame x:Name="Frame" NavigationUIVisibility="Hidden" Grid.Row="0" Grid.RowSpan="7"/>
 
         <StackPanel Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
