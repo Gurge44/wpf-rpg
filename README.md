@@ -5,6 +5,9 @@
 - Boros Sándor Kevin (Fighting)
 - Szabó Balázs (Story And Rooms)
 
+## Resources
+[Drive Link Here](https://drive.google.com/drive/folders/15DSg9rxmHlBSlx9AQMHfSPPA_B5D80HJ?usp=sharing)
+
 ## Tasks:
 ✔️ Main Menu
 
