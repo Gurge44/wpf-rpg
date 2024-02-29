@@ -1,6 +1,8 @@
-﻿using System.IO;
+﻿using System.ComponentModel;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -11,14 +13,13 @@ namespace RPG
     /// </summary>
     public partial class ChooseToFight : Window
     {
-        private ScrollViewer scrollViewer;
-
         public ChooseToFight()
         {
             InitializeComponent();
             LoadCharacters(main_grid);
             SetBackgroundImage();
         }
+
 
 
         public void SetBackgroundImage()
@@ -29,7 +30,7 @@ namespace RPG
         }
 
 
-         public void DisplayAllCharacters()
+        public void DisplayAllCharacters()
         {
             main_grid.Children.Clear();
             main_grid.ColumnDefinitions.Clear();
@@ -46,10 +47,8 @@ namespace RPG
 
                 characterGrid.SetValue(Grid.ColumnProperty, i % numColumns);
 
-                // Add spacing between characters
                 characterGrid.Margin = new Thickness(20, 0, 20, 30);
 
-                // Create a new column definition for each character
                 main_grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             }
         }
@@ -62,70 +61,37 @@ namespace RPG
                 Visibility = Visibility.Visible
             };
 
-            // Create two rows in the main grid
+
             characterGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
             characterGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
 
-            // Upper grid for the character image
-            Grid upperGrid = new Grid();
-            upperGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-            upperGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            Grid leftGrid = new Grid();
+            leftGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
+            for (int i = 0; i < Main.Characters.Count; i++)
+            {
+                leftGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+
+            }
             Image characterImage = new Image
             {
                 Source = new BitmapImage(new Uri(character.ImageURL)),
                 Stretch = Stretch.Uniform,
                 HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Center
+                VerticalAlignment = VerticalAlignment.Center,
+                Width = 30,
+                Height = 30
             };
-            upperGrid.Children.Add(characterImage);
+            leftGrid.Children.Add(characterImage);
 
-            // Lower grid for character data
-            Grid lowerGrid = new Grid
+            Grid rightGrid = new Grid
             {
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Top
             };
 
-            // Add a row for each property in the lower grid
-            int numProperties = 0;
-            if (!string.IsNullOrEmpty(character.Name))
-            {
-                lowerGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
-                numProperties++;
-            }
-            if (character.Species != null)
-            {
-                lowerGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
-                numProperties++;
-            }
-            if (character.Strength != null)
-            {
-                lowerGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
-                numProperties++;
-            }
-            if (character.Dexterity != null)
-            {
-                lowerGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
-                numProperties++;
-            }
-            if (character.Vitality != null)
-            {
-                lowerGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
-                numProperties++;
-            }
-            if (character.Magic != null)
-            {
-                lowerGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
-                numProperties++;
-            }
-            if (character.Speed != null)
-            {
-                lowerGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
-                numProperties++;
-            }
 
-            if (numProperties > 4)
+            if (true)
             {
                 ListBox propertyListBox = new ListBox
                 {
@@ -134,90 +100,63 @@ namespace RPG
                     MaxHeight = 100
                 };
 
-                if (!string.IsNullOrEmpty(character.Name))
-                {
-                    propertyListBox.Items.Add("Név: " + character.Name);
-                }
-                if (character.Species != null)
-                {
-                    propertyListBox.Items.Add("Faj: " + character.Species.ToString());
-                }
-                if (character.Strength != null)
-                {
-                    propertyListBox.Items.Add("Erősség: " + character.Strength.ToString());
-                }
-                if (character.Dexterity != null)
-                {
-                    propertyListBox.Items.Add("Ügyesség: " + character.Dexterity.ToString());
-                }
-                if (character.Vitality != null)
-                {
-                    propertyListBox.Items.Add("Vitalitás: " + character.Vitality.ToString());
-                }
-                if (character.Magic != null)
-                {
-                    propertyListBox.Items.Add("Varázslat: " + character.Magic.ToString());
-                }
-                if (character.Speed != null)
-                {
-                    propertyListBox.Items.Add("Sebesség: " + character.Speed.ToString());
-                }
 
-                lowerGrid.Children.Add(propertyListBox);
+                propertyListBox.Items.Add("Név: " + character.Name);
+
+                propertyListBox.Items.Add("Species: " + character.Species.ToString());
+
+                propertyListBox.Items.Add("Strenght: " + character.Strength.ToString());
+
+                propertyListBox.Items.Add("Dexterity: " + character.Dexterity.ToString());
+
+                propertyListBox.Items.Add("Vitality: " + character.Vitality.ToString());
+
+                propertyListBox.Items.Add("Magic: " + character.Magic.ToString());
+
+                propertyListBox.Items.Add("Speed: " + character.Speed.ToString());
+
+
+                rightGrid.Children.Add(propertyListBox);
             }
-            else
+            else if (false)
             {
                 int row = 0;
-                if (!string.IsNullOrEmpty(character.Name))
-                {
-                    lowerGrid.Children.Add(CreateTextBlock("Név: " + character.Name));
-                    lowerGrid.Children[row].SetValue(Grid.RowProperty, row);
-                    row++;
-                }
-                if (character.Species != null)
-                {
-                    lowerGrid.Children.Add(CreateTextBlock("Faj: " + character.Species.ToString()));
-                    lowerGrid.Children[row].SetValue(Grid.RowProperty, row);
-                    row++;
-                }
-                if (character.Strength != null)
-                {
-                    lowerGrid.Children.Add(CreateTextBlock("Erősség: " + character.Strength.ToString()));
-                    lowerGrid.Children[row].SetValue(Grid.RowProperty, row);
-                    row++;
-                }
-                if (character.Dexterity != null)
-                {
-                    lowerGrid.Children.Add(CreateTextBlock("Ügyesség: " + character.Dexterity.ToString()));
-                    lowerGrid.Children[row].SetValue(Grid.RowProperty, row);
-                    row++;
-                }
-                if (character.Vitality != null)
-                {
-                    lowerGrid.Children.Add(CreateTextBlock("Vitalitás: " + character.Vitality.ToString()));
-                    lowerGrid.Children[row].SetValue(Grid.RowProperty, row);
-                    row++;
-                }
-                if (character.Magic != null)
-                {
-                    lowerGrid.Children.Add(CreateTextBlock("Varázslat: " + character.Magic.ToString()));
-                    lowerGrid.Children[row].SetValue(Grid.RowProperty, row);
-                    row++;
-                }
-                if (character.Speed != null)
-                {
-                    lowerGrid.Children.Add(CreateTextBlock("Sebesség: " + character.Speed.ToString()));
-                    lowerGrid.Children[row].SetValue(Grid.RowProperty, row);
-                    row++;
-                }
+
+                rightGrid.Children.Add(CreateTextBlock("Name: " + character.Name));
+                rightGrid.Children[row].SetValue(Grid.RowProperty, row);
+                row++;
+
+                rightGrid.Children.Add(CreateTextBlock("Species: " + character.Species.ToString()));
+                rightGrid.Children[row].SetValue(Grid.RowProperty, row);
+                row++;
+
+                rightGrid.Children.Add(CreateTextBlock("Erősség: " + character.Strength.ToString()));
+                rightGrid.Children[row].SetValue(Grid.RowProperty, row);
+                row++;
+
+                rightGrid.Children.Add(CreateTextBlock("Ügyesség: " + character.Dexterity.ToString()));
+                rightGrid.Children[row].SetValue(Grid.RowProperty, row);
+                row++;
+
+                rightGrid.Children.Add(CreateTextBlock("Vitalitás: " + character.Vitality.ToString()));
+                rightGrid.Children[row].SetValue(Grid.RowProperty, row);
+                row++;
+
+                rightGrid.Children.Add(CreateTextBlock("Varázslat: " + character.Magic.ToString()));
+                rightGrid.Children[row].SetValue(Grid.RowProperty, row);
+                row++;
+
+                rightGrid.Children.Add(CreateTextBlock("Sebesség: " + character.Speed.ToString()));
+                rightGrid.Children[row].SetValue(Grid.RowProperty, row);
+                row++;
+
             }
 
-            // Set grid placement
-            upperGrid.SetValue(Grid.RowProperty, 0);
-            lowerGrid.SetValue(Grid.RowProperty, 1);
+            leftGrid.SetValue(Grid.ColumnProperty, 0);
+            rightGrid.SetValue(Grid.ColumnProperty, 1);
 
-            characterGrid.Children.Add(upperGrid);
-            characterGrid.Children.Add(lowerGrid);
+            characterGrid.Children.Add(leftGrid);
+            characterGrid.Children.Add(rightGrid);
 
             return characterGrid;
         }
@@ -268,6 +207,11 @@ namespace RPG
         }
 
         public void CharacterClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void main_grid_Scroll(object sender, ScrollEventArgs e)
         {
 
         }
