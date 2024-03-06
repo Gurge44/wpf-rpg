@@ -30,6 +30,17 @@ namespace RPG
         }
 
 
+        public void CreateMainGrid()
+        {
+            main_grid.Children.Clear();
+            main_grid.ColumnDefinitions.Clear();
+            main_grid.RowDefinitions.Clear();
+
+            Grid grid = new Grid();
+
+          
+        }
+
         public void DisplayAllCharacters()
         {
             main_grid.Children.Clear();
@@ -57,7 +68,6 @@ namespace RPG
         {
             Grid characterGrid = new Grid
             {
-                Margin = new Thickness(20, 0, 20, 30),
                 Visibility = Visibility.Visible
             };
 
@@ -65,33 +75,24 @@ namespace RPG
             characterGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
             characterGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
 
-            Grid leftGrid = new Grid();
-            leftGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+
 
             for (int i = 0; i < Main.Characters.Count; i++)
             {
-                leftGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+                left_grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
 
             }
             Image characterImage = new Image
             {
                 Source = new BitmapImage(new Uri(character.ImageURL)),
-                Stretch = Stretch.Uniform,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Center,
-                Width = 30,
-                Height = 30
+                Width = 150,
+                Height = 150
             };
-            leftGrid.Children.Add(characterImage);
-
-            Grid rightGrid = new Grid
-            {
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Top
-            };
+            left_grid.Children.Add(characterImage);
 
 
-            if (true)
+
+            if (false)
             {
                 ListBox propertyListBox = new ListBox
                 {
@@ -116,47 +117,47 @@ namespace RPG
                 propertyListBox.Items.Add("Speed: " + character.Speed.ToString());
 
 
-                rightGrid.Children.Add(propertyListBox);
+                right_grid.Children.Add(propertyListBox);
             }
             else if (false)
             {
                 int row = 0;
 
-                rightGrid.Children.Add(CreateTextBlock("Name: " + character.Name));
-                rightGrid.Children[row].SetValue(Grid.RowProperty, row);
+                right_grid.Children.Add(CreateTextBlock("Name: " + character.Name));
+                right_grid.Children[row].SetValue(Grid.RowProperty, row);
                 row++;
 
-                rightGrid.Children.Add(CreateTextBlock("Species: " + character.Species.ToString()));
-                rightGrid.Children[row].SetValue(Grid.RowProperty, row);
+                right_grid.Children.Add(CreateTextBlock("Species: " + character.Species.ToString()));
+                right_grid.Children[row].SetValue(Grid.RowProperty, row);
                 row++;
 
-                rightGrid.Children.Add(CreateTextBlock("Erősség: " + character.Strength.ToString()));
-                rightGrid.Children[row].SetValue(Grid.RowProperty, row);
+                right_grid.Children.Add(CreateTextBlock("Erősség: " + character.Strength.ToString()));
+                right_grid.Children[row].SetValue(Grid.RowProperty, row);
                 row++;
 
-                rightGrid.Children.Add(CreateTextBlock("Ügyesség: " + character.Dexterity.ToString()));
-                rightGrid.Children[row].SetValue(Grid.RowProperty, row);
+                right_grid.Children.Add(CreateTextBlock("Ügyesség: " + character.Dexterity.ToString()));
+                right_grid.Children[row].SetValue(Grid.RowProperty, row);
                 row++;
 
-                rightGrid.Children.Add(CreateTextBlock("Vitalitás: " + character.Vitality.ToString()));
-                rightGrid.Children[row].SetValue(Grid.RowProperty, row);
+                right_grid.Children.Add(CreateTextBlock("Vitalitás: " + character.Vitality.ToString()));
+                right_grid.Children[row].SetValue(Grid.RowProperty, row);
                 row++;
 
-                rightGrid.Children.Add(CreateTextBlock("Varázslat: " + character.Magic.ToString()));
-                rightGrid.Children[row].SetValue(Grid.RowProperty, row);
+                right_grid.Children.Add(CreateTextBlock("Varázslat: " + character.Magic.ToString()));
+                right_grid.Children[row].SetValue(Grid.RowProperty, row);
                 row++;
 
-                rightGrid.Children.Add(CreateTextBlock("Sebesség: " + character.Speed.ToString()));
-                rightGrid.Children[row].SetValue(Grid.RowProperty, row);
+                right_grid.Children.Add(CreateTextBlock("Sebesség: " + character.Speed.ToString()));
+                right_grid.Children[row].SetValue(Grid.RowProperty, row);
                 row++;
 
             }
 
-            leftGrid.SetValue(Grid.ColumnProperty, 0);
-            rightGrid.SetValue(Grid.ColumnProperty, 1);
+            left_grid.SetValue(Grid.ColumnProperty, 0);
+            right_grid.SetValue(Grid.ColumnProperty, 1);
 
-            characterGrid.Children.Add(leftGrid);
-            characterGrid.Children.Add(rightGrid);
+            characterGrid.Children.Add(left_grid);
+            characterGrid.Children.Add(right_grid);
 
             return characterGrid;
         }
