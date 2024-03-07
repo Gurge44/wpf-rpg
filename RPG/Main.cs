@@ -37,17 +37,9 @@ namespace RPG
             RandomNames = [.. File.ReadAllLines("RandomNames.txt")];
         }
 
-        /// <summary>
-        /// Loads all characters from a specified file and puts them into a grid with the characters' images and names.
-        /// </summary>
-        /// <param name="grid">The grid to which the characters are outputted</param>
-        /// <param name="filePath">The file's path to read the characters from</param>
-        /// <param name="baseStyle">The base style of the buttons</param>
-        /// <param name="handler">The method that runs when clicking on a character button in the grid</param>
-        public static void LoadCharacters(Grid grid, string filePath, Style baseStyle, RoutedEventHandler handler)
+        public static void LoadCharacters()
         {
             Characters.Clear();
-            grid.Children.RemoveRange(1, grid.Children.Count - 1);
 
             try
             {
@@ -75,6 +67,20 @@ namespace RPG
                 }
             }
             catch { }
+        }
+
+        /// <summary>
+        /// Loads all characters from a specified file and puts them into a grid with the characters' images and names.
+        /// </summary>
+        /// <param name="grid">The grid to which the characters are outputted</param>
+        /// <param name="filePath">The file's path to read the characters from</param>
+        /// <param name="baseStyle">The base style of the buttons</param>
+        /// <param name="handler">The method that runs when clicking on a character button in the grid</param>
+        public static void LoadCharacters(Grid grid, string filePath, Style baseStyle, RoutedEventHandler handler)
+        {
+            grid.Children.RemoveRange(1, grid.Children.Count - 1);
+
+            LoadCharacters();
 
             (int Column, int Row) = (0, 1);
             foreach (var character in Characters)

@@ -16,7 +16,8 @@ namespace RPG
         public ChooseToFight()
         {
             InitializeComponent();
-            LoadCharacters(main_grid);
+            Main.LoadCharacters();
+            DisplayAllCharacters();
             SetBackgroundImage();
         }
 
@@ -24,8 +25,10 @@ namespace RPG
 
         public void SetBackgroundImage()
         {
-            ImageBrush backgroundImage = new ImageBrush();
-            backgroundImage.ImageSource = new BitmapImage(new Uri("backg.jpg", UriKind.Relative));
+            ImageBrush backgroundImage = new()
+            {
+                ImageSource = new BitmapImage(new Uri("backg.jpg", UriKind.Relative))
+            };
             grid_g.Background = backgroundImage;
         }
 
@@ -43,169 +46,74 @@ namespace RPG
 
         public void DisplayAllCharacters()
         {
-            main_grid.Children.Clear();
-            main_grid.ColumnDefinitions.Clear();
-
-            int numColumns = 4;
-
-            for (int i = 0; i < Main.Characters.Count; i++)
-            {
-                Character character = Main.Characters.ElementAt(i);
-
-                Grid characterGrid = CreateCharacterGrid(character);
-
-                main_grid.Children.Add(characterGrid);
-
-                characterGrid.SetValue(Grid.ColumnProperty, i % numColumns);
-
-                characterGrid.Margin = new Thickness(20, 0, 20, 30);
-
-                main_grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-            }
+            Grid characterGrid = CreateCharacterGrid();
+            left_grid.Children.Add(characterGrid);
         }
 
-        public Grid CreateCharacterGrid(Character character)
+        public Grid CreateCharacterGrid()
         {
-            Grid characterGrid = new Grid
-            {
-                Visibility = Visibility.Visible
-            };
-
-
-            characterGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
-            characterGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
-
-
+            Grid characterGrid = new Grid();
+            Grid grid = new Grid();
+            int db = 0;
+            Grid lGrid = new();
+            Grid rGrid = new();
 
             for (int i = 0; i < Main.Characters.Count; i++)
             {
-                left_grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-
+                characterGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
             }
-            Image characterImage = new Image
+
+            foreach (var c in Main.Characters)
             {
-                Source = new BitmapImage(new Uri(character.ImageURL)),
-                Width = 150,
-                Height = 150
-            };
-            left_grid.Children.Add(characterImage);
+                lGrid.Children.Clear();
+                rGrid.Children.Clear();
+                lGrid.RowDefinitions.Clear();
+                lGrid.ColumnDefinitions.Clear();
+                rGrid.RowDefinitions.Clear();
+                rGrid.ColumnDefinitions.Clear();
+
+                grid.Children.Clear();
+                grid.RowDefinitions.Clear();
+                grid.ColumnDefinitions.Clear();
+
+                grid.RowDefinitions.Add(new RowDefinition());
+                grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(3, GridUnitType.Star) });
 
 
-
-            if (false)
-            {
-                ListBox propertyListBox = new ListBox
+                Image image = new()
                 {
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    VerticalAlignment = VerticalAlignment.Top,
-                    MaxHeight = 100
+                    Source = new BitmapImage(new Uri(c.ImageURL, UriKind.Absolute)),
+                    Stretch = Stretch.Fill
                 };
+                lGrid.Children.Add(image);
+
+                TextBlock properties = new()
+                {
+                    Text = $"Name: {c.Name}\nSpecies: {c.Species}\nStrength: {c.Strength}\nDexterity: {c.Dexterity}\nVitality: {c.Vitality}\nMagic: {c.Magic}\nSpeed: {c.Speed}",
+                    FontSize = 20,
+                    Foreground = new SolidColorBrush(Colors.White),
+                };
+                rGrid.Children.Add(properties);
+
+                Grid.SetColumn(lGrid, 0);
+                Grid.SetColumn(rGrid, 1);
+                Grid.SetRow(lGrid, db);
+                Grid.SetRow(rGrid, db);
 
 
-                propertyListBox.Items.Add("Név: " + character.Name);
 
-                propertyListBox.Items.Add("Species: " + character.Species.ToString());
+                grid.Children.Add(lGrid);
+                grid.Children.Add(rGrid);
 
-                propertyListBox.Items.Add("Strenght: " + character.Strength.ToString());
+                Grid.SetRow(grid, db);
 
-                propertyListBox.Items.Add("Dexterity: " + character.Dexterity.ToString());
-
-                propertyListBox.Items.Add("Vitality: " + character.Vitality.ToString());
-
-                propertyListBox.Items.Add("Magic: " + character.Magic.ToString());
-
-                propertyListBox.Items.Add("Speed: " + character.Speed.ToString());
-
-
-                right_grid.Children.Add(propertyListBox);
+                characterGrid.Children.Add(grid);
+                db++;
             }
-            else if (false)
-            {
-                int row = 0;
-
-                right_grid.Children.Add(CreateTextBlock("Name: " + character.Name));
-                right_grid.Children[row].SetValue(Grid.RowProperty, row);
-                row++;
-
-                right_grid.Children.Add(CreateTextBlock("Species: " + character.Species.ToString()));
-                right_grid.Children[row].SetValue(Grid.RowProperty, row);
-                row++;
-
-                right_grid.Children.Add(CreateTextBlock("Erősség: " + character.Strength.ToString()));
-                right_grid.Children[row].SetValue(Grid.RowProperty, row);
-                row++;
-
-                right_grid.Children.Add(CreateTextBlock("Ügyesség: " + character.Dexterity.ToString()));
-                right_grid.Children[row].SetValue(Grid.RowProperty, row);
-                row++;
-
-                right_grid.Children.Add(CreateTextBlock("Vitalitás: " + character.Vitality.ToString()));
-                right_grid.Children[row].SetValue(Grid.RowProperty, row);
-                row++;
-
-                right_grid.Children.Add(CreateTextBlock("Varázslat: " + character.Magic.ToString()));
-                right_grid.Children[row].SetValue(Grid.RowProperty, row);
-                row++;
-
-                right_grid.Children.Add(CreateTextBlock("Sebesség: " + character.Speed.ToString()));
-                right_grid.Children[row].SetValue(Grid.RowProperty, row);
-                row++;
-
-            }
-
-            left_grid.SetValue(Grid.ColumnProperty, 0);
-            right_grid.SetValue(Grid.ColumnProperty, 1);
-
-            characterGrid.Children.Add(left_grid);
-            characterGrid.Children.Add(right_grid);
-
             return characterGrid;
         }
 
-        public TextBlock CreateTextBlock(string text)
-        {
-            return new TextBlock
-            {
-                Text = text,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Bottom
-            };
-        }
-
-        public void LoadCharacters(Grid grid)
-        {
-            Main.Characters.Clear();
-            grid.Children.RemoveRange(1, grid.Children.Count - 1);
-
-            try
-            {
-                string[] lines = File.ReadAllLines(Main.filePath);
-
-                foreach (string line in lines)
-                {
-                    string[] values = line.Split('*');
-
-                    if (values.Length == 8)
-                    {
-                        Character character = new
-                        (
-                            name: values[0],
-                            species: (Species)int.Parse(values[1]),
-                            strength: (SkillLevel)int.Parse(values[2]),
-                            dexterity: (SkillLevel)int.Parse(values[3]),
-                            vitality: (SkillLevel)int.Parse(values[4]),
-                            magic: (SkillLevel)int.Parse(values[5]),
-                            speed: (SkillLevel)int.Parse(values[6]),
-                            imageURL: values[7]
-                        );
-                        Main.Characters.Add(character);
-                    }
-                }
-            }
-            catch { }
-
-            DisplayAllCharacters();
-        }
 
         public void CharacterClick(object sender, RoutedEventArgs e)
         {
