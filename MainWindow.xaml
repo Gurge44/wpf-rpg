@@ -1,0 +1,155 @@
+﻿<Window x:Class="RPG.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="RPG" Height="720" Width="1280" FontSize="24" MinWidth="1280" MinHeight="720" MaxHeight="720" MaxWidth="720">
+
+    <Window.Resources>
+        <SolidColorBrush x:Key="CommonBackgroundBrush" Color="Black" Opacity="0.6"/>
+
+        <Style x:Key="CustomButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource CommonBackgroundBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Grid.RenderTransform>
+                                <ScaleTransform x:Name="scaleTransform" ScaleX="1" ScaleY="1"/>
+                            </Grid.RenderTransform>
+                            <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <!-- Scale to 105% when hovering -->
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="scaleTransform" Storyboard.TargetProperty="ScaleX" To="1.05" Duration="0:0:0.2"/>
+                                            <DoubleAnimation Storyboard.TargetName="scaleTransform" Storyboard.TargetProperty="ScaleY" To="1.05" Duration="0:0:0.2"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Setter Property="Background" Value="White"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                                <Trigger.ExitActions>
+                                    <!-- Return to normal size when not hovering -->
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="scaleTransform" Storyboard.TargetProperty="ScaleX" To="1" Duration="0:0:0.2"/>
+                                            <DoubleAnimation Storyboard.TargetName="scaleTransform" Storyboard.TargetProperty="ScaleY" To="1" Duration="0:0:0.2"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="CustomLabelStyle" TargetType="Label">
+            <Setter Property="Background" Value="{StaticResource CommonBackgroundBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+        <Style x:Key="CustomTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Background" Value="{StaticResource CommonBackgroundBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+        <Style x:Key="CustomComboBoxStyle" TargetType="ComboBox">
+            <Setter Property="Background" Value="{StaticResource CommonBackgroundBrush}" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="35" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <ToggleButton
+                            Name="ToggleButton"
+                            IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Foreground="White">
+                                <ContentPresenter
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Content="{TemplateBinding SelectionBoxItem}"
+                                ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" />
+                            </ToggleButton>
+                            <Popup
+                            IsOpen="{TemplateBinding IsDropDownOpen}"
+                            PlacementTarget="{Binding ElementName=ToggleButton}"
+                            Placement="Bottom">
+                                <Border
+                                Background="{StaticResource CommonBackgroundBrush}"
+                                BorderThickness="1">
+                                    <ScrollViewer>
+                                        <ItemsPresenter />
+                                    </ScrollViewer>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+
+    <Grid x:Name="MainWindowGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions></Grid.ColumnDefinitions>
+
+        <Grid.Background>
+            <ImageBrush ImageSource="cs2.jpg"/>
+        </Grid.Background>
+
+        <Frame x:Name="Frame" NavigationUIVisibility="Hidden" Grid.Row="0" Grid.RowSpan="7"/>
+
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Label Style="{StaticResource CustomLabelStyle}" Name="TitleLabel" Content=" RPG GAME " FontSize="60" Width="1280" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+            <Button Click="NewGameButton_Click" Style="{StaticResource CustomButtonStyle}" Width="500" Height="44" x:Name="NewGameButton" Content=" NEW GAME " HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button Style="{StaticResource CustomButtonStyle}" Width="500" Height="44" x:Name="LoadGameButton" Content=" LOAD GAME " HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <Button Style="{StaticResource CustomButtonStyle}" Width="500" Height="44" x:Name="ManageCharactersButton" Content=" MANAGE CHARACTERS " HorizontalAlignment="Center" VerticalAlignment="Center" Click="ManageCharactersButton_Click"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="4" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,50,70,0">
+            <Button Style="{StaticResource CustomButtonStyle}" Height="44" Name="QuitButton" HorizontalAlignment="Right" VerticalAlignment="Bottom" MouseEnter="QuitButton_MouseEnter" MouseLeave="QuitButton_MouseLeave" Click="QuitButton_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="quit.png" Width="50"/>
+                    <Label Content=" QUIT GAME " Name="QuitLabel" Foreground="White" FontWeight="SemiBold"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+
+        <StackPanel Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+            <Label Style="{StaticResource CustomLabelStyle}" Content=" © 2024 " FontSize="10" Width="1280" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontWeight="Light"/>
+        </StackPanel>
+
+    </Grid>
+</Window>
