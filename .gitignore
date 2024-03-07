@@ -14,3 +14,11 @@
 /.vs/VSWorkspaceState.json
 /RPG/.vs/ProjectEvaluation/rpg.metadata.v7.bin
 /RPG/.vs/ProjectEvaluation/rpg.projects.v7.bin
+/RPG/obj/Debug/net8.0-windows/ChooseToFight.g.i.cs
+/RPG/obj/Debug/net8.0-windows/Fight.g.i.cs
+/RPG/obj/Debug/net8.0-windows/MainWindow.g.i.cs
+/RPG/obj/Debug/net8.0-windows/RPG.AssemblyInfo.cs
+/RPG/obj/Debug/net8.0-windows/RPG.AssemblyInfoInputs.cache
+/RPG/obj/Debug/net8.0-windows/RPG.GeneratedMSBuildEditorConfig.editorconfig
+/RPG/obj/Debug/net8.0-windows/RPG_MarkupCompile.i.cache
+/RPG/obj/Debug/net8.0-windows/RPG_MarkupCompile.i.lref

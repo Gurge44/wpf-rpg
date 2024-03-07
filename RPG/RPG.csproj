@@ -13,6 +13,7 @@
     <None Remove="add.png" />
     <None Remove="cancel.png" />
     <None Remove="delete.png" />
+    <None Remove="intro.mp4" />
     <None Remove="quit.png" />
     <None Remove="return.png" />
     <None Remove="save.png" />
@@ -47,6 +48,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="delete.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="intro.mp4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="quit.png">

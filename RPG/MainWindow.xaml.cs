@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.IO;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -14,8 +15,8 @@ namespace RPG
         public MainWindow()
         {
             InitializeComponent();
-            CurrentMainWindow.Instance = this;
             PlayIntro();
+            CurrentMainWindow.Instance = this;
             Main.LoadResources();
         }
         public void NavigateToEditingPage(Character character)
@@ -29,7 +30,7 @@ namespace RPG
             Main.SetMainWindowContents(Visibility.Hidden);
             MediaElement introPlayer = new()
             {
-                Source = new Uri("intro.mp4", UriKind.Relative),
+                Source = new Uri(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, "intro.mp4")),
                 LoadedBehavior = MediaState.Play,
                 UnloadedBehavior = MediaState.Close,
                 Stretch = Stretch.Fill,
