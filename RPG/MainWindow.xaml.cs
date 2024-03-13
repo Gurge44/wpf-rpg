@@ -98,12 +98,12 @@ namespace RPG
 
         private void NewGameButton_Click(object sender, RoutedEventArgs e)
         {
-            var x = new ChooseToFight
-            {
-                WindowStartupLocation = WindowStartupLocation.CenterScreen
-            };
-            x.Show();
-            Close();
+            TitleLabel.Visibility = Visibility.Hidden;
+            NewGameButton.Visibility = Visibility.Hidden;
+            LoadGameButton.Visibility = Visibility.Hidden;
+            ManageCharactersButton.Visibility = Visibility.Hidden;
+            QuitButton.Visibility = Visibility.Hidden;
+            Frame.Navigate(new Room());
         }
     }
 
