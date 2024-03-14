@@ -53,18 +53,38 @@ namespace RPG
         public Grid CreateCharacterGrid()
         {
             Grid characterGrid = new Grid();
-            Grid grid = new Grid();
             int db = 0;
-            Grid lGrid = new();
-            Grid rGrid = new();
 
-            for (int i = 0; i < Main.Characters.Count; i++)
+            ScrollViewer scrollViewer = new ScrollViewer();
+            characterGrid.Children.Add(scrollViewer);
+            Grid.SetRow(scrollViewer, 0);
+
+            StackPanel stackPanel = new StackPanel();
+            scrollViewer.Content = stackPanel;
+
+            foreach (var character in Main.Characters)
             {
-                characterGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
+                UIElement characterRow = CreateCharacterRow(); 
+                stackPanel.Children.Add(characterRow);
+                db++;
             }
 
-            foreach (var c in Main.Characters)
+            return characterGrid;
+        }
+
+        public Grid CreateCharacterRow()
+        {
+            Grid characterGrid = new Grid();
+            int db = 0;
+
+            foreach (var character in Main.Characters)
             {
+                characterGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
+
+                Grid grid = new Grid();
+                Grid lGrid = new Grid();
+                Grid rGrid = new Grid();
+
                 lGrid.Children.Clear();
                 rGrid.Children.Clear();
                 lGrid.RowDefinitions.Clear();
@@ -80,17 +100,16 @@ namespace RPG
                 grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
                 grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(3, GridUnitType.Star) });
 
-
-                Image image = new()
+                Image image = new Image
                 {
-                    Source = new BitmapImage(new Uri(c.ImageURL, UriKind.Absolute)),
+                    Source = new BitmapImage(new Uri(character.ImageURL, UriKind.Absolute)),
                     Stretch = Stretch.Fill
                 };
                 lGrid.Children.Add(image);
 
-                TextBlock properties = new()
+                TextBlock properties = new TextBlock
                 {
-                    Text = $"Name: {c.Name}\nSpecies: {c.Species}\nStrength: {c.Strength}\nDexterity: {c.Dexterity}\nVitality: {c.Vitality}\nMagic: {c.Magic}\nSpeed: {c.Speed}",
+                    Text = $"Name: {character.Name}\nSpecies: {character.Species}\nStrength: {character.Strength}\nDexterity: {character.Dexterity}\nVitality: {character.Vitality}\nMagic: {character.Magic}\nSpeed: {character.Speed}",
                     FontSize = 20,
                     Foreground = new SolidColorBrush(Colors.White),
                 };
@@ -100,8 +119,6 @@ namespace RPG
                 Grid.SetColumn(rGrid, 1);
                 Grid.SetRow(lGrid, db);
                 Grid.SetRow(rGrid, db);
-
-
 
                 grid.Children.Add(lGrid);
                 grid.Children.Add(rGrid);
@@ -113,6 +130,8 @@ namespace RPG
             }
             return characterGrid;
         }
+
+
 
 
         public void CharacterClick(object sender, RoutedEventArgs e)
