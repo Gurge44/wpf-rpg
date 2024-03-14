@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-using System.IO;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
@@ -41,7 +39,7 @@ namespace RPG
 
             Grid grid = new Grid();
 
-          
+
         }
 
         public void DisplayAllCharacters()
@@ -53,21 +51,17 @@ namespace RPG
         public Grid CreateCharacterGrid()
         {
             Grid characterGrid = new Grid();
-            int db = 0;
 
             ScrollViewer scrollViewer = new ScrollViewer();
             characterGrid.Children.Add(scrollViewer);
             Grid.SetRow(scrollViewer, 0);
 
-            StackPanel stackPanel = new StackPanel();
-            scrollViewer.Content = stackPanel;
+            Grid grid = new Grid();
+            scrollViewer.Content = grid;
 
-            foreach (var character in Main.Characters)
-            {
-                UIElement characterRow = CreateCharacterRow(); 
-                stackPanel.Children.Add(characterRow);
-                db++;
-            }
+
+            Grid characterRow = CreateCharacterRow();
+            grid.Children.Add(characterRow);
 
             return characterGrid;
         }
@@ -81,7 +75,10 @@ namespace RPG
             {
                 characterGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
 
-                Grid grid = new Grid();
+                Grid grid = new Grid
+                {
+                    Margin = new Thickness(0, 0, 0, 10)
+                };
                 Grid lGrid = new Grid();
                 Grid rGrid = new Grid();
 
@@ -96,15 +93,17 @@ namespace RPG
                 grid.RowDefinitions.Clear();
                 grid.ColumnDefinitions.Clear();
 
-                grid.RowDefinitions.Add(new RowDefinition());
+                grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
                 grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
                 grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(3, GridUnitType.Star) });
-
+                grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
+                
                 Image image = new Image
                 {
                     Source = new BitmapImage(new Uri(character.ImageURL, UriKind.Absolute)),
-                    Stretch = Stretch.Fill
+                    Stretch = Stretch.Fill,                    
                 };
+                
                 lGrid.Children.Add(image);
 
                 TextBlock properties = new TextBlock
@@ -117,8 +116,8 @@ namespace RPG
 
                 Grid.SetColumn(lGrid, 0);
                 Grid.SetColumn(rGrid, 1);
-                Grid.SetRow(lGrid, db);
-                Grid.SetRow(rGrid, db);
+                Grid.SetRow(lGrid, 0);
+                Grid.SetRow(rGrid, 0);
 
                 grid.Children.Add(lGrid);
                 grid.Children.Add(rGrid);
