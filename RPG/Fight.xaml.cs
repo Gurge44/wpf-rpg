@@ -1,7 +1,9 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -14,64 +16,13 @@ using System.Windows.Shapes;
 namespace RPG
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Fight.xaml
     /// </summary>
-
-    public interface IFight
-    {
-        public int Damage { get; set;}
-        public int HP { get; set; }
-        void Fight();
-
-
-    }
-
-    public partial class Fight : Window
+    public partial class Fight : Page
     {
         public Fight()
         {
             InitializeComponent();
-            
-
-            Closing += OnClose;
-        }
-
-        
-
-        public void OnClose(object? sender, CancelEventArgs e)
-        {
-            var x = new MainWindow
-            {
-                WindowStartupLocation = WindowStartupLocation.CenterScreen
-            };
-            x.Show();
-            try
-            {
-                this.Close();
-            }
-            catch { }
-        }
-
-        private void Choose()
-        {
-            CurrentCharacterListPage.Instance ??= new();
-            CurrentMainWindow.Instance?.Frame.NavigationService.Navigate(new ChooseToFight());
-            Fight_label.Visibility = Visibility.Hidden;
-        }
-
-        private void Create_Team_Grid(int RoomNumber)
-        {
-            switch (RoomNumber)
-            {
-                case 1:
-                    Fight_1();
-                    break;
-            }
-        }
-
-        private void Fight_1()
-        {
-
         }
     }
 }
