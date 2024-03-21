@@ -9,6 +9,88 @@
       Title="Fight">
 
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="8*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" x:Name="upper_grid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0" x:Name="enemy_picture_grid">
+
+                </Grid>
+                <Grid Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="6*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        
+                    </Grid>
+                    <Grid Grid.Column="1" x:Name="enemy_name_grid">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2*"/>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="2*"/>
+                        </Grid.RowDefinitions>
+                    </Grid>
+                    <Grid Grid.Column="2">
+                        
+                    </Grid>
+                </Grid>
+            </Grid>
+            <Grid Grid.Column="1">
+                <!--Mirror it -->
+                <Grid.LayoutTransform>
+                    <ScaleTransform ScaleX="-1"/>
+                </Grid.LayoutTransform>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0" x:Name="character_picture_grid">
+                    <Grid.LayoutTransform>
+                        <ScaleTransform ScaleX="-1"/>
+                    </Grid.LayoutTransform>
+                </Grid>
+                <Grid Grid.Column="1">
+                    
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="6*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+
+                    </Grid>
+                    <Grid Grid.Column="1" x:Name="character_name_grid">
+                        <Grid.LayoutTransform>
+                            <ScaleTransform ScaleX="-1"/>
+                        </Grid.LayoutTransform>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2*"/>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="2*"/>
+                        </Grid.RowDefinitions>
+                    </Grid>
+                    <Grid Grid.Column="2">
+
+                    </Grid>
+                </Grid>
+
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="2" x:Name="main_grid">
+
+        </Grid>
     </Grid>
 </Page>

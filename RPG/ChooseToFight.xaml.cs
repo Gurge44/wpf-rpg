@@ -18,7 +18,11 @@ namespace RPG
             DisplayAllCharacters();
             SetBackgroundImage();
         }
-
+        public void Navigate()
+        {
+            Frame.NavigationService.Navigate(new Fight());
+            content_grid.Visibility = Visibility.Hidden;
+        }
 
 
         public void SetBackgroundImage()
@@ -71,7 +75,7 @@ namespace RPG
             Grid characterGrid = new Grid();
             int db = 0;
 
-            foreach (var character in Main.Characters)
+            foreach (var character in Main.Team)
             {
                 characterGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
 
@@ -124,6 +128,13 @@ namespace RPG
 
                 Grid.SetRow(grid, db);
 
+                Button button = new Button();
+
+                button.Tag = character;
+                button.Click += CharacterClick;
+                grid.Children.Add(button);
+
+
                 characterGrid.Children.Add(grid);
                 db++;
             }
@@ -138,9 +149,9 @@ namespace RPG
 
         }
 
-        private void main_grid_Scroll(object sender, ScrollEventArgs e)
+        private void Fight_Click(object sender, RoutedEventArgs e)
         {
-
+            Navigate();
         }
     }
 }
