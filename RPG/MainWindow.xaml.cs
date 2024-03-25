@@ -7,15 +7,14 @@ using System.Windows.Media;
 
 namespace RPG
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
             PlayIntro();
+            Main.AllowClose = false;
+            Closing += (sender, e) => e.Cancel = !Main.AllowClose;
             CurrentMainWindow.Instance = this;
             Main.LoadResources();
         }
@@ -95,7 +94,11 @@ namespace RPG
 
         private void QuitButton_MouseLeave(object sender, MouseEventArgs e) => QuitLabel.Foreground = new SolidColorBrush(Colors.White);
 
-        private void QuitButton_Click(object sender, RoutedEventArgs e) => Close();
+        private void QuitButton_Click(object sender, RoutedEventArgs e)
+        {
+            Main.AllowClose = true;
+            Close();
+        }
 
         private void NewGameButton_Click(object sender, RoutedEventArgs e)
         {
@@ -104,6 +107,7 @@ namespace RPG
                 WindowStartupLocation = WindowStartupLocation.CenterScreen
             };
             x.Show();
+            Main.AllowClose = true;
             Close();
         }
     }

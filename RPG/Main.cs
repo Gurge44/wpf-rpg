@@ -12,6 +12,7 @@ namespace RPG
         private static HashSet<string> imageURLs = [];
         private static HashSet<string> randomNames = [];
         private static Random random = new();
+        private static bool allowClose = false;
 
         public static HashSet<Character> Characters { get => characters; set => characters = value; }
         public static HashSet<string> ImageURLs { get => imageURLs; set => imageURLs = value; }
@@ -20,6 +21,8 @@ namespace RPG
 
         public static HashSet<Character>? Enemies => characters.Where(x => x.Species == Species.Enemy)?.ToHashSet();
         public static HashSet<Character>? Team => characters.Where(x => x.Species != Species.Enemy)?.ToHashSet();
+
+        public static bool AllowClose { get => allowClose; set => allowClose = value; }
 
         public const string filePath = "characters.txt";
 
