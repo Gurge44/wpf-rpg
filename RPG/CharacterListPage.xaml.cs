@@ -3,7 +3,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace RPG
 {
@@ -15,10 +14,10 @@ namespace RPG
         public CharacterListPage()
         {
             InitializeComponent();
-            Main.LoadCharacters(CharacterGrid, Main.filePath, AddCharacterButton.Style, CharacterButton_Click);
+            Main.LoadCharacters(CharacterGrid, Main.filePath, AddCharacterButton.Style, CharacterButton_Click, SelectCharacter);
             CurrentCharacterListPage.Instance = this;
         }
-        
+
         public static void SaveCharacters() => File.WriteAllLines(Main.filePath, Main.Characters.Select(x => x.ToString() ?? string.Empty));
 
         public void CharacterButton_Click(object sender, RoutedEventArgs e)
@@ -28,6 +27,70 @@ namespace RPG
                 CurrentMainWindow.Instance?.NavigateToEditingPage(selectedCharacter);
             }
         }
+
+
+
+        public void SelectCharacter(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is Button && (sender as Button)?.Tag is Character enemy && enemy.Species == Species.Enemy)
+            {
+                return;
+            }
+
+
+            Window messageBox = new Window
+            {
+                Title = "Select Character",
+                Width = 250,
+                Height = 100,
+                WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                ResizeMode = ResizeMode.NoResize,
+                WindowStyle = WindowStyle.SingleBorderWindow
+            };
+
+            StackPanel stackPanel = new StackPanel
+            {
+                Orientation = Orientation.Horizontal,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center,
+                Margin = new Thickness(10)
+            };
+
+            Button selectButton = new Button
+            {
+                Content = "Select",
+                Margin = new Thickness(5),
+                Padding = new Thickness(10),
+                Width = 75
+            };
+            selectButton.Click += (s, args) =>
+            {
+                MessageBox.Show("Character selected");
+                Main.SelectedCharacter = (sender as Button)?.Tag as Character;
+                Main.nextPage = true;
+                messageBox.Close();
+            };
+            stackPanel.Children.Add(selectButton);
+
+            Button cancelButton = new Button
+            {
+                Content = "Cancel",
+                Margin = new Thickness(5),
+                Padding = new Thickness(10),
+                Width = 75
+            };
+            cancelButton.Click += (s, args) =>
+            {
+                messageBox.Close();
+            };
+            stackPanel.Children.Add(cancelButton);
+
+            messageBox.Content = stackPanel;
+
+            messageBox.ShowDialog();
+        }
+
+
 
         private void AddCharacter_Click(object sender, RoutedEventArgs e) => CurrentMainWindow.Instance?.NavigateToEditingPage(CharacterHelper.GetDefaultCharacter());
 

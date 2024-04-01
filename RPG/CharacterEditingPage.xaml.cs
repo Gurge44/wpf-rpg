@@ -50,7 +50,7 @@ namespace RPG
             CharacterListPage.SaveCharacters();
 
             var listPage = CurrentCharacterListPage.Instance;
-            if (listPage != null) Main.LoadCharacters(listPage.CharacterGrid, Main.filePath, listPage.AddCharacterButton.Style, listPage.CharacterButton_Click);
+            if (listPage != null) Main.LoadCharacters(listPage.CharacterGrid, Main.filePath, listPage.AddCharacterButton.Style, listPage.CharacterButton_Click, listPage.SelectCharacter);
 
             GoBack();
         }
@@ -181,7 +181,7 @@ namespace RPG
             CharacterListPage.SaveCharacters();
 
             var listPage = CurrentCharacterListPage.Instance;
-            if (listPage != null) Main.LoadCharacters(listPage.CharacterGrid, Main.filePath, listPage.AddCharacterButton.Style, listPage.CharacterButton_Click);
+            if (listPage != null) Main.LoadCharacters(listPage.CharacterGrid, Main.filePath, listPage.AddCharacterButton.Style, listPage.CharacterButton_Click, listPage.SelectCharacter);
 
             GoBack();
         }

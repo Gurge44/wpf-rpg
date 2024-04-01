@@ -12,39 +12,6 @@
       Title="ChooseToFight" Background="White">
 
     <Grid x:Name="grid_g">
-        <Frame x:Name="Frame" NavigationUIVisibility="Hidden" Grid.RowSpan="69420"/>
-        <Grid x:Name="content_grid">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="6*"/>
-                <RowDefinition Height="1*"/>
-            </Grid.RowDefinitions>
-            
-            <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5*"/>
-                    <ColumnDefinition Width="3*"/>
-                    <ColumnDefinition Width="5*"/>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="1">
-                    <Button x:Name="start_fight" Content="Fight" Click="Fight_Click"/>
-                </Grid>
-            </Grid>
-            <Grid x:Name="main_grid" Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0" x:Name="left_grid" Background="#00FFFFFF">
-
-                </Grid>
-                <Grid Grid.Column="1" x:Name="right_grid">
-                    
-                </Grid>
-            </Grid>
-            <Grid Grid.Row="2">
-            
-            </Grid>
-        </Grid>
+        <Frame x:Name="Frame" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>
