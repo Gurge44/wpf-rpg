@@ -15,13 +15,16 @@ namespace RPG
         {
             InitializeComponent();
             Main.LoadCharacters();
-            DisplayAllCharacters();
+            if (false)
+            {
+                DisplayAllCharacters();
+            }
             SetBackgroundImage();
+            Navigate();
         }
         public void Navigate()
         {
             Frame.NavigationService.Navigate(new Fight());
-            content_grid.Visibility = Visibility.Hidden;
         }
 
 
@@ -37,9 +40,7 @@ namespace RPG
 
         public void CreateMainGrid()
         {
-            main_grid.Children.Clear();
-            main_grid.ColumnDefinitions.Clear();
-            main_grid.RowDefinitions.Clear();
+
 
             Grid grid = new Grid();
 
@@ -49,7 +50,6 @@ namespace RPG
         public void DisplayAllCharacters()
         {
             Grid characterGrid = CreateCharacterGrid();
-            left_grid.Children.Add(characterGrid);
         }
 
         public Grid CreateCharacterGrid()
@@ -152,6 +152,13 @@ namespace RPG
         private void Fight_Click(object sender, RoutedEventArgs e)
         {
             Navigate();
+        }
+
+
+        public void ToFight()
+        {
+            Navigate();
+
         }
     }
 }

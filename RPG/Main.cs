@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Input;
 
 namespace RPG
 {
@@ -13,6 +14,8 @@ namespace RPG
         private static HashSet<string> randomNames = [];
         private static Random random = new();
         private static bool allowClose = false;
+        public static Character SelectedCharacter;
+        public static bool nextPage = false;
 
         public static HashSet<Character> Characters { get => characters; set => characters = value; }
         public static HashSet<string> ImageURLs { get => imageURLs; set => imageURLs = value; }
@@ -79,7 +82,7 @@ namespace RPG
         /// <param name="filePath">The file's path to read the characters from</param>
         /// <param name="baseStyle">The base style of the buttons</param>
         /// <param name="handler">The method that runs when clicking on a character button in the grid</param>
-        public static void LoadCharacters(Grid grid, string filePath, Style baseStyle, RoutedEventHandler handler)
+        public static void LoadCharacters(Grid grid, string filePath, Style baseStyle, RoutedEventHandler handler, MouseButtonEventHandler rhandler)
         {
             grid.Children.RemoveRange(1, grid.Children.Count - 1);
 
@@ -99,6 +102,7 @@ namespace RPG
                     FontSize = 10,
                 };
                 characterButton.Click += handler;
+                characterButton.MouseRightButtonDown += rhandler;
 
                 if (character.IsEnemy) characterButton.Foreground = new SolidColorBrush(Colors.Red);
 

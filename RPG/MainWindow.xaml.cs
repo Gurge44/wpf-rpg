@@ -102,6 +102,11 @@ namespace RPG
 
         private void NewGameButton_Click(object sender, RoutedEventArgs e)
         {
+            if (!Main.nextPage)
+            {
+                ManageCharactersButton_Click(sender, e);
+                return;
+            }
             var x = new ChooseToFight
             {
                 WindowStartupLocation = WindowStartupLocation.CenterScreen
