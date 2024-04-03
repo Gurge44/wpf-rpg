@@ -23,19 +23,20 @@ namespace RPG
         public Room()
         {
             InitializeComponent();
-
+            
             List<RoomType> Rooms = new List<RoomType>
-    {
-        new RoomType("Treasure room", "Description1", "Room1.jpg"),
-        new RoomType("Shrine room", "Description2", "altroom.jpg"),
-    };
+            {
+                new RoomType("Treasure room", "You wake up with an aching head and no idea where you are. You look around and see that you are in what seems to be a prison cell.", "Room1.jpg"),
+                new RoomType("Shrine room", "The door before you is unlike all others you have come across before. You sense a strong foe behind it.", "altroom.jpg"),
+            };
 
             Random random = new Random();
-            RoomType selectedRoom = Rooms[random.Next(0, 2)];
+            RoomType selectedRoom = Rooms[0];
 
             ChangeBackgroundImage(selectedRoom.Image);
             RoomTitleBox.Content = selectedRoom.Title;
             RoomDescriptionBox.Text = selectedRoom.Description;
+            MainWindow.RoomCounter++;
         }
 
         private void ChangeBackgroundImage(string imagePath)
@@ -45,6 +46,15 @@ namespace RPG
             Background = imageBrush;
         }
 
+        private void FirstButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainGrid.Visibility = Visibility.Collapsed;
+            RoomFrame.NavigationService.Navigate(new Room());
+        }
+        private void SecondButton_Click(object sender, RoutedEventArgs e)
+        {
+            FirstButton_Click( sender, e);
+        }
     }
 }
 

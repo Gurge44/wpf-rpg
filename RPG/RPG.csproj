@@ -15,6 +15,7 @@
     <None Remove="delete.png" />
     <None Remove="quit.png" />
     <None Remove="return.png" />
+    <None Remove="Room1.jpg" />
     <None Remove="save.png" />
   </ItemGroup>
 
@@ -57,6 +58,9 @@
     </Resource>
     <Resource Include="return.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Room1.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="save.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

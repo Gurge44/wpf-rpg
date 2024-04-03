@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Security.Cryptography.X509Certificates;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -11,6 +12,7 @@ namespace RPG
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static int RoomCounter = 0;
         public MainWindow()
         {
             InitializeComponent();

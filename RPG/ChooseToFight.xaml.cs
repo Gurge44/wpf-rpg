@@ -92,66 +92,66 @@ namespace RPG
 
 
 
-            if (false)
-            {
-                ListBox propertyListBox = new ListBox
-                {
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    VerticalAlignment = VerticalAlignment.Top,
-                    MaxHeight = 100
-                };
+            //if (false)
+            //{
+            //    ListBox propertyListBox = new ListBox
+            //    {
+            //        HorizontalAlignment = HorizontalAlignment.Center,
+            //        VerticalAlignment = VerticalAlignment.Top,
+            //        MaxHeight = 100
+            //    };
 
 
-                propertyListBox.Items.Add("Név: " + character.Name);
+            //    propertyListBox.Items.Add("Név: " + character.Name);
 
-                propertyListBox.Items.Add("Species: " + character.Species.ToString());
+            //    propertyListBox.Items.Add("Species: " + character.Species.ToString());
 
-                propertyListBox.Items.Add("Strenght: " + character.Strength.ToString());
+            //    propertyListBox.Items.Add("Strenght: " + character.Strength.ToString());
 
-                propertyListBox.Items.Add("Dexterity: " + character.Dexterity.ToString());
+            //    propertyListBox.Items.Add("Dexterity: " + character.Dexterity.ToString());
 
-                propertyListBox.Items.Add("Vitality: " + character.Vitality.ToString());
+            //    propertyListBox.Items.Add("Vitality: " + character.Vitality.ToString());
 
-                propertyListBox.Items.Add("Magic: " + character.Magic.ToString());
+            //    propertyListBox.Items.Add("Magic: " + character.Magic.ToString());
 
-                propertyListBox.Items.Add("Speed: " + character.Speed.ToString());
+            //    propertyListBox.Items.Add("Speed: " + character.Speed.ToString());
 
 
-                right_grid.Children.Add(propertyListBox);
-            }
-            else if (false)
-            {
-                int row = 0;
+            //    right_grid.Children.Add(propertyListBox);
+            //}
+            //else if (false)
+            //{
+            //    int row = 0;
 
-                right_grid.Children.Add(CreateTextBlock("Name: " + character.Name));
-                right_grid.Children[row].SetValue(Grid.RowProperty, row);
-                row++;
+            //    right_grid.Children.Add(CreateTextBlock("Name: " + character.Name));
+            //    right_grid.Children[row].SetValue(Grid.RowProperty, row);
+            //    row++;
 
-                right_grid.Children.Add(CreateTextBlock("Species: " + character.Species.ToString()));
-                right_grid.Children[row].SetValue(Grid.RowProperty, row);
-                row++;
+            //    right_grid.Children.Add(CreateTextBlock("Species: " + character.Species.ToString()));
+            //    right_grid.Children[row].SetValue(Grid.RowProperty, row);
+            //    row++;
 
-                right_grid.Children.Add(CreateTextBlock("Erősség: " + character.Strength.ToString()));
-                right_grid.Children[row].SetValue(Grid.RowProperty, row);
-                row++;
+            //    right_grid.Children.Add(CreateTextBlock("Erősség: " + character.Strength.ToString()));
+            //    right_grid.Children[row].SetValue(Grid.RowProperty, row);
+            //    row++;
 
-                right_grid.Children.Add(CreateTextBlock("Ügyesség: " + character.Dexterity.ToString()));
-                right_grid.Children[row].SetValue(Grid.RowProperty, row);
-                row++;
+            //    right_grid.Children.Add(CreateTextBlock("Ügyesség: " + character.Dexterity.ToString()));
+            //    right_grid.Children[row].SetValue(Grid.RowProperty, row);
+            //    row++;
 
-                right_grid.Children.Add(CreateTextBlock("Vitalitás: " + character.Vitality.ToString()));
-                right_grid.Children[row].SetValue(Grid.RowProperty, row);
-                row++;
+            //    right_grid.Children.Add(CreateTextBlock("Vitalitás: " + character.Vitality.ToString()));
+            //    right_grid.Children[row].SetValue(Grid.RowProperty, row);
+            //    row++;
 
-                right_grid.Children.Add(CreateTextBlock("Varázslat: " + character.Magic.ToString()));
-                right_grid.Children[row].SetValue(Grid.RowProperty, row);
-                row++;
+            //    right_grid.Children.Add(CreateTextBlock("Varázslat: " + character.Magic.ToString()));
+            //    right_grid.Children[row].SetValue(Grid.RowProperty, row);
+            //    row++;
 
-                right_grid.Children.Add(CreateTextBlock("Sebesség: " + character.Speed.ToString()));
-                right_grid.Children[row].SetValue(Grid.RowProperty, row);
-                row++;
+            //    right_grid.Children.Add(CreateTextBlock("Sebesség: " + character.Speed.ToString()));
+            //    right_grid.Children[row].SetValue(Grid.RowProperty, row);
+            //    row++;
 
-            }
+            //}
 
             left_grid.SetValue(Grid.ColumnProperty, 0);
             right_grid.SetValue(Grid.ColumnProperty, 1);
