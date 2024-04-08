@@ -132,7 +132,7 @@
         </StackPanel>
 
         <StackPanel Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button Style="{StaticResource CustomButtonStyle}" Width="500" Height="44" x:Name="LoadGameButton" Content=" LOAD GAME " HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Button Style="{StaticResource CustomButtonStyle}" Width="500" Height="44" x:Name="LoadGameButton" Content=" LOAD GAME " HorizontalAlignment="Center" VerticalAlignment="Center" Click="LoadGameButton_Click"/>
         </StackPanel>
 
         <StackPanel Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Top">
