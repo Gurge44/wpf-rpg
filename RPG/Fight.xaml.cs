@@ -22,29 +22,27 @@ namespace RPG
     /// </summary>
     public partial class Fight : Page
     {
-        public interface IFight
-        {
-            int Health { get; set; }
-            int Damage { get; set; }
-            int Level { get; set; }
-            int Experience { get; set; }
-        }
+        private Tetris tetris;
+
         public Fight()
         {
             InitializeComponent();
+            MainTetris.FightInstance(this);
             MainFight.Fightinstance(this);
+            MainFight.MainGrid = main_grid;
             if (Main.SelectedCharacter != null)
             {
                 CreateEnemyGrid();
                 CreateCharacterGrid();
-                InitializeMain(1);
+                tetris = new Tetris();
+                tetris.InitializeMain(1);
                 InitializeTimer();
             }
             else
             {
                 MessageBox.Show("Please select a character to fight with");
             }
-            
+
         }
 
         public void CreateEnemyGrid()
@@ -135,35 +133,12 @@ namespace RPG
             enemyHealth.Margin = new Thickness(0, 0, 0, 0);
         }
 
-        public void InitializeMain(int level)
-        {
-            MainFight.Level = level;
-            MainFight.time = 10;
-            MainFight.Width = 20;
-            MainFight.Height = 20;
-            MainFight.Blocks = new Block[MainFight.Width, MainFight.Height];
-            CreateMainGrid();
-            TimerProgressBar();
-            EnemyHealthProgressBar();
-            CharacterProgressBar();
-            MainFight.SetCharacterDamage(Main.SelectedCharacter);
-            MainFight.SetCharacterHealth(Main.SelectedCharacter);
-            MainFight.SetEnemyDamage(MainFight.Currentenemy);
-            MainFight.SetEnemyHealth(MainFight.Currentenemy);
-        }
-
         public void InitializeTimer()
         {
             DispatcherTimer timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Interval = TimeSpan.FromMicroseconds(1);
             timer.Tick += Timer_Tick;
             timer.Start();
-
-            if (MainFight.time == 0)
-            {
-                MainFight.EndCurrentAttack();
-                MainFight.time = 10;
-            }
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -171,8 +146,8 @@ namespace RPG
             if (MainFight.time == 0)
             {
                 MainFight.EndCurrentAttack();
-                MainFight.time = 10;
-                CreateMainGrid();
+                MainFight.time = 10000;
+                tetris.CreateMainGrid();
                 MainFight.EndCurrentAttack();
             }
             else
@@ -185,76 +160,13 @@ namespace RPG
         public void TimerProgressBar()
         {
             ProgressBar timer = timer_pb;
-            timer.Maximum = 10;
+            timer.Maximum = 10000;
             timer.Minimum = 0;
             timer.Value = MainFight.time;
             timer.Foreground = Brushes.Gray;
             timer.Background = Brushes.White;
             timer.Orientation = Orientation.Horizontal;
             timer.Margin = new Thickness(0, 0, 0, 0);
-        }
-
-
-        public void CreateMainGrid()
-        {
-            main_grid.Children.Clear();
-            main_grid.ColumnDefinitions.Clear();
-            main_grid.RowDefinitions.Clear();
-
-            for (int i = 0; i < MainFight.Width; i++)
-            {
-                main_grid.ColumnDefinitions.Add(new ColumnDefinition());
-            }
-            for (int i = 0; i < MainFight.Height; i++)
-            {
-                main_grid.RowDefinitions.Add(new RowDefinition());
-            }
-
-            for (int i = 0; i < MainFight.Width; i++)
-            {
-                for (int j = 0; j < MainFight.Height; j++)
-                {
-                    Button button = new Button();
-                    button.Click += Button_Click;
-                    button.Name = "Button_" + i + "_" + j;
-                    button.FontSize = 20;
-                    Grid.SetRow(button, j);
-                    Grid.SetColumn(button, i);
-                    main_grid.Children.Add(button);
-                    FillMatrix(i, j, button);
-                }
-            }
-        }
-
-        public void FillMatrix(int x, int y, Button button)
-        {
-            MainFight.Blocks[x, y] = new Block();
-            MainFight.Blocks[x, y].X = x;
-            MainFight.Blocks[x, y].Y = y;
-            MainFight.Blocks[x, y].Type = MainFight.SetRandomType(x, y);
-            MainFight.Blocks[x, y].Button = button;
-            MainFight.DrawBlock(x, y);
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Button button = (Button)sender;
-            string[] coordinates = button.Name.Split('_');
-            int x = int.Parse(coordinates[1]);
-            int y = int.Parse(coordinates[2]);
-            MainFight.HandleType(x, y);
-            MainFight.DrawBlock(x, y);
-        }
-
-        public void SetRandomColor()
-        {
-            Random random = new Random();
-
-        }
-
-        public void GameOver()
-        {
-            //Process.Start("suffer.exe");
         }
 
         public void EnemyHealthProgressBar()

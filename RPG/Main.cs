@@ -22,8 +22,8 @@ namespace RPG
         public static HashSet<string> RandomNames { get => randomNames; set => randomNames = value; }
         public static Random Random { get => random; set => random = value; }
 
-        public static HashSet<Character>? Enemies => characters.Where(x => x.Species == Species.Enemy)?.ToHashSet();
-        public static HashSet<Character>? Team => characters.Where(x => x.Species != Species.Enemy)?.ToHashSet();
+        public static HashSet<Character> Enemies => characters.Where(x => x.Species == Species.Enemy).ToHashSet();
+        public static HashSet<Character> Team => characters.Where(x => x.Species != Species.Enemy).ToHashSet();
 
         public static bool AllowClose { get => allowClose; set => allowClose = value; }
 

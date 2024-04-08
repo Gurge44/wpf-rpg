@@ -115,6 +115,11 @@ namespace RPG
             Main.AllowClose = true;
             Close();
         }
+
+        public void LoadGameButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 
     public static class CurrentMainWindow

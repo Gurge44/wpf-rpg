@@ -25,9 +25,9 @@ namespace RPG
             return value.ToString() ?? string.Empty;
         }
 
-        public static T? RandomElement<T>(this HashSet<T> values)
+        public static T RandomElement<T>(this HashSet<T> values)
         {
-            if (values == null || values.Count == 0) return default;
+            if (values == null || values.Count == 0) throw new NullReferenceException("The collection is null or empty.");
 
             int index = Main.Random.Next(0, values.Count);
             T element = values.ElementAt(index);

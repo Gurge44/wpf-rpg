@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Shapes;
 
 namespace RPG
 {
@@ -12,16 +13,35 @@ namespace RPG
         public BlockType Type { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
-        public Button Button { get; set; }
+        public Rectangle Rectangle { get; set; }
     }
 
     public enum BlockType
     {
         Empty,
-        HealthBoost,
-        DamageBoost,
-        HealthEffect,
-        DamageEffect,
-        Kill
+        Piece,
+        Border,
     }
+
+    //tetris
+    public class Piece
+    {
+        public PieceType Type { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
+        public int Rotation { get; set; }
+        public List<Block> Blocks { get; set; }
+    }
+
+    public enum PieceType
+    {
+        I,
+        J,
+        L,
+        O,
+        S,
+        T,
+        Z
+    }
+
 }
