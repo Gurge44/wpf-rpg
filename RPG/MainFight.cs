@@ -23,7 +23,10 @@ namespace RPG
         public static int time;
         public static Character Currentenemy = Main.Enemies.RandomElement();
         public static Fight Instance;
-        
+        public static int Max_E;
+        public static int Max_C;
+        public static ProgressBar enemyHprogressBar = new ProgressBar();
+
         public static void Fightinstance(Fight fight)
         {
             Instance = fight;
@@ -31,7 +34,10 @@ namespace RPG
 
         public static void EndCurrentAttack()
         {
-
+            enemyHealth -= 10;
+            //refresh health
+            enemyHprogressBar.Value = enemyHealth;
+                
         }
 
         public static void EndEnemyAttack()

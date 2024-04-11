@@ -79,5 +79,17 @@ namespace RPG
             Blocks[x, y].Type = type;
             DrawBlock(x, y);
         }
+
+        public static void SetPieceBlocks(int x, int y)
+        {
+            foreach (Block block in CurrentPiece.Blocks)
+            {
+                SetBlock(BlockType.Empty, block.X, block.Y);
+            }
+            foreach (Block block in CurrentPiece.Blocks)
+            {
+                SetBlock(BlockType.Piece, block.X + x, block.Y + y);
+            }
+        }
     }
 }

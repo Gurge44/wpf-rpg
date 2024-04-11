@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace RPG
 {
@@ -23,9 +24,18 @@ namespace RPG
             Frame.NavigationService.Navigate(new CharacterEditingPage(character));
         }
 
+        public void CopyIntroToBin()
+        {
+            // go back to the rpg folder
+            string introPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, "..", "..", "..", "intro.mp4");
+            File.Copy(introPath, Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, "intro.mp4"), true);
+        }
+
         async void PlayIntro()
         {
+            CopyIntroToBin();
             await Task.Delay(1);
+            MainWindowGrid.Background = new SolidColorBrush(Colors.Black);
             Main.SetMainWindowContents(Visibility.Hidden);
             MediaElement introPlayer = new()
             {
@@ -55,6 +65,7 @@ namespace RPG
                 MainWindowGrid.Children.Remove(introPlayer);
                 MainWindowGrid.Children.Remove(skipButton);
                 Main.SetMainWindowContents(Visibility.Visible);
+                MainWindowGrid.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/cs2.jpg")));
             };
             skipButton.MouseEnter += (sender, e) => skipButton.Foreground = new SolidColorBrush(Colors.Black);
             skipButton.MouseLeave += (sender, e) => skipButton.Foreground = new SolidColorBrush(Colors.White);
@@ -66,6 +77,7 @@ namespace RPG
                 MainWindowGrid.Children.Remove(introPlayer);
                 MainWindowGrid.Children.Remove(skipButton);
                 Main.SetMainWindowContents(Visibility.Visible);
+                MainWindowGrid.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/cs2.jpg")));
             };
         }
 

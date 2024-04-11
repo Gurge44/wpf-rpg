@@ -85,14 +85,6 @@ namespace RPG
             }
         }
 
-        public void Pause()
-        {
-            if (MainTetris.IsStarted && !MainTetris.IsGameOver)
-            {
-                MainTetris.IsPaused = !MainTetris.IsPaused;
-                MainTetris.Paused = !MainTetris.Paused;
-            }
-        }
 
         public void End()
         {
@@ -263,6 +255,23 @@ namespace RPG
                     Rotate();
                     break;
             }
+        }
+
+        public void SetPiece()
+        {
+            MainTetris.CurrentPiece = new Piece();
+            MainTetris.CurrentPiece.X = MainTetris.Width / 2;
+            MainTetris.CurrentPiece.Y = 0;
+            MainTetris.CurrentPiece.Type = (PieceType)MainTetris.random.Next(0, 7);
+            MainTetris.CurrentPiece.Blocks = new List<Block>();
+            for (int i = 0; i < 4; i++)
+            {
+                Block block = new Block();
+                block.Type = BlockType.Piece;
+                block.X = MainTetris.CurrentPiece.X;
+            }
+
+
         }
     }
 }
