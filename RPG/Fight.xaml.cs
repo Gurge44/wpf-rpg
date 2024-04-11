@@ -29,6 +29,7 @@ namespace RPG
             InitializeComponent();
             MainTetris.FightInstance(this);
             MainFight.Fightinstance(this);
+            SetHealths();
             MainFight.MainGrid = main_grid;
             if (Main.SelectedCharacter != null)
             {
@@ -43,6 +44,14 @@ namespace RPG
                 MessageBox.Show("Please select a character to fight with");
             }
 
+        }
+
+        public void SetHealths()
+        {
+            MainFight.characterHealth = 1000;
+            MainFight.enemyHealth = 200;
+            MainFight.Max_C = MainFight.characterHealth;
+            MainFight.Max_E = MainFight.enemyHealth;
         }
 
         public void CreateEnemyGrid()
@@ -61,7 +70,6 @@ namespace RPG
             enemy_picture_grid.Children.Add(enemy);
 
             Grid grid_name = new Grid();
-            ProgressBar progressBar = new ProgressBar();
             Label name = new Label();
             name.Content = x.Name;
             name.FontSize = 20;
@@ -69,13 +77,12 @@ namespace RPG
             name.FontWeight = FontWeights.Bold;
             name.HorizontalContentAlignment = HorizontalAlignment.Left;
             name.VerticalContentAlignment = VerticalAlignment.Bottom;
-
             grid_name.Children.Add(name);
             Grid.SetRow(grid_name, 0);
-            Grid.SetRow(progressBar, 1);
+            Grid.SetRow(MainFight.enemyHprogressBar, 1);
             enemy_name_grid.Children.Add(grid_name);
-            enemy_name_grid.Children.Add(progressBar);
-            EnemyProgressBar(progressBar);
+            enemy_name_grid.Children.Add(MainFight.enemyHprogressBar);
+            EnemyProgressBar(MainFight.enemyHprogressBar);
         }
 
         public void CreateCharacterGrid()
@@ -113,7 +120,7 @@ namespace RPG
 
         public void CharacterProgressBar(ProgressBar characterHealth)
         {
-            characterHealth.Maximum = MainFight.characterHealth;
+            characterHealth.Maximum = MainFight.Max_C;
             characterHealth.Minimum = 0;
             characterHealth.Value = MainFight.characterHealth;
             characterHealth.Foreground = Brushes.Green;
@@ -124,7 +131,7 @@ namespace RPG
 
         public void EnemyProgressBar(ProgressBar enemyHealth)
         {
-            enemyHealth.Maximum = MainFight.enemyHealth;
+            enemyHealth.Maximum = MainFight.Max_E;
             enemyHealth.Minimum = 0;
             enemyHealth.Value = MainFight.enemyHealth;
             enemyHealth.Foreground = Brushes.Red;
@@ -148,7 +155,6 @@ namespace RPG
                 MainFight.EndCurrentAttack();
                 MainFight.time = 10000;
                 tetris.CreateMainGrid();
-                MainFight.EndCurrentAttack();
             }
             else
             {
@@ -168,37 +174,5 @@ namespace RPG
             timer.Orientation = Orientation.Horizontal;
             timer.Margin = new Thickness(0, 0, 0, 0);
         }
-
-        public void EnemyHealthProgressBar()
-        {
-            ProgressBar enemyHealth = new ProgressBar();
-            enemyHealth.Maximum = MainFight.enemyHealth;
-            enemyHealth.Minimum = 0;
-            enemyHealth.Value = MainFight.enemyHealth;
-            enemyHealth.Foreground = Brushes.Red;
-            enemyHealth.Background = Brushes.White;
-            enemyHealth.Orientation = Orientation.Horizontal;
-            enemyHealth.Margin = new Thickness(0, 0, 0, 0);
-
-            Grid.SetRow(enemyHealth, 1);
-            enemy_name_grid.Children.Add(enemyHealth);
-        }
-
-        public void CharacterProgressBar()
-        {
-            ProgressBar characterHealth = new ProgressBar();
-            characterHealth.Maximum = MainFight.characterHealth;
-            characterHealth.Minimum = 0;
-            characterHealth.Value = MainFight.characterHealth;
-            characterHealth.Foreground = Brushes.Green;
-            characterHealth.Background = Brushes.White;
-            characterHealth.Orientation = Orientation.Horizontal;
-            characterHealth.Margin = new Thickness(0, 0, 0, 0);
-
-            Grid.SetRow(characterHealth, 1);
-            character_name_grid.Children.Add(characterHealth);
-        }
-
-
     }
 }

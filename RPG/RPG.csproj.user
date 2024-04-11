@@ -16,6 +16,9 @@
     <Compile Update="Fight.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Intro.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="CharacterEditingPage.xaml">
@@ -25,6 +28,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Fight.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Intro.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MainWindow.xaml">
