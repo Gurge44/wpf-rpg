@@ -14,14 +14,14 @@ namespace RPG
 {
     public class Tetris
     {
-        public Tetris(int level)
+        public Tetris()
         {
-            InitializeGame(level);
+            InitializeGame();
             CreateMainGrid();
             CreatePiece();
             InitializeTimer();
         }
-        public void InitializeGame(int level)
+        public void InitializeGame()
         {
             MainTetris.Random = new Random();
             MainTetris.Width = 10;
@@ -83,7 +83,6 @@ namespace RPG
             MainTetris.Blocks[x, y].IsLocked = false;
             MainTetris.DrawBlock(x, y);
         }
-
         public void CreatePiece()
         {
             MainTetris.PositionX = MainTetris.Width / 2;
@@ -185,7 +184,6 @@ namespace RPG
         }
 
 
-
         public void Move(object sender, KeyEventArgs e)
         {
             switch (e.Key)
@@ -215,6 +213,7 @@ namespace RPG
                     break;
             }
         }
+
 
         public void MoveToDirection(Direction direction)
         {

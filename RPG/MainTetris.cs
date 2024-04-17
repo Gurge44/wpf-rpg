@@ -4,6 +4,7 @@ namespace RPG
 {
     internal static class MainTetris
     {
+        public static int GridHeight;
         public static int PositionX;
         public static int PositionY;
         public static Block[,] Blocks;

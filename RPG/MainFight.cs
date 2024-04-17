@@ -12,9 +12,6 @@ namespace RPG
     internal static class MainFight
     {
         public static Grid MainGrid;
-        public static int Experience;
-        public static int currentHealth;
-        public static int currentDamage;
         public static int enemyHealth;
         public static int enemyDamage;
         public static int characterHealth;
@@ -35,14 +32,20 @@ namespace RPG
         public static void EndCurrentAttack()
         {
             enemyHealth -= 10;
-            //refresh health
             enemyHprogressBar.Value = enemyHealth;
-                
         }
 
         public static void EndEnemyAttack()
         {
 
+        }
+
+        public static void SetDefaultValues(int level)
+        {
+            enemyHealth = 200 * level;
+            enemyDamage = 50 * level;
+            characterHealth = 1000 * level;
+            characterDamage = 100 * level;
         }
 
 
