@@ -4,33 +4,21 @@ namespace RPG
 {
     internal static class MainTetris
     {
-
-        public static Random random = new Random();
+        public static int PositionX;
+        public static int PositionY;
         public static Block[,] Blocks;
+        public static Block CurrentBlock;
+        public static Block NextBlock;
         public static int Width;
         public static int Height;
-        public static int Score;
-        public static int Lines;
-        public static int Level;
-        public static int LinesCleared;
-        public static Piece CurrentPiece;
-        public static Piece NextPiece;
-        public static bool GameOver = false;
-        public static bool Paused = false;
-        public static bool Started = false;
-        public static bool IsNewPiece = false;
-        public static bool IsNewGame = true;
-        public static bool IsGameOver = false;
-        public static bool IsPaused = false;
-        public static bool IsStarted = false;
-        private static Fight Instance;
+        public static Random Random;
+        public static List<Block> Piece;
+        private static MainWindow Instance;
 
-
-        public static void FightInstance(Fight fight)
+        public static void MainWindowInstance(MainWindow instance)
         {
-            Instance = fight;
+            Instance = instance;
         }
-
 
         public static void DrawBlock(int x, int y)
         {
@@ -40,56 +28,34 @@ namespace RPG
                 case BlockType.Empty:
                     Blocks[x, y].Rectangle.Fill = Brushes.White;
                     break;
-                case BlockType.Piece:
-                    switch(CurrentPiece.Type)
-                        {                         
-                        case PieceType.I:
-                            Blocks[x, y].Rectangle.Fill = Brushes.Cyan;
-                            break;
-                        case PieceType.J:
-                            Blocks[x, y].Rectangle.Fill = Brushes.Blue;
-                            break;
-                        case PieceType.L:
-                            Blocks[x, y].Rectangle.Fill = Brushes.Orange;
-                            break;
-                        case PieceType.O:
-                            Blocks[x, y].Rectangle.Fill = Brushes.Yellow;
-                            break;
-                        case PieceType.S:
-                            Blocks[x, y].Rectangle.Fill = Brushes.Green;
-                            break;
-                        case PieceType.T:
-                            Blocks[x, y].Rectangle.Fill = Brushes.Purple;
-                            break;
-                        case PieceType.Z:
-                            Blocks[x, y].Rectangle.Fill = Brushes.Red;
-                            break;
-                    }
+                case BlockType.I:
+                    Blocks[x, y].Rectangle.Fill = Brushes.Cyan;
                     break;
-                case BlockType.Border:
-                    Blocks[x, y].Rectangle.Fill = Brushes.Black;
+                case BlockType.J:
+                    Blocks[x, y].Rectangle.Fill = Brushes.Blue;
                     break;
-            }
-        }
-
-        public static void SetBlock(BlockType type, int x, int y)
-        {
-            if (x < 0 || x >= Width || y < 0 || y >= Height)
-                return;
-            Blocks[x, y].Type = type;
-            DrawBlock(x, y);
-        }
-
-        public static void SetPieceBlocks(int x, int y)
-        {
-            foreach (Block block in CurrentPiece.Blocks)
-            {
-                SetBlock(BlockType.Empty, block.X, block.Y);
-            }
-            foreach (Block block in CurrentPiece.Blocks)
-            {
-                SetBlock(BlockType.Piece, block.X + x, block.Y + y);
+                case BlockType.L:
+                    Blocks[x, y].Rectangle.Fill = Brushes.Orange;
+                    break;
+                case BlockType.O:
+                    Blocks[x, y].Rectangle.Fill = Brushes.Yellow;
+                    break;
+                case BlockType.S:
+                    Blocks[x, y].Rectangle.Fill = Brushes.Green;
+                    break;
+                case BlockType.T:
+                    Blocks[x, y].Rectangle.Fill = Brushes.Purple;
+                    break;
+                case BlockType.Z:
+                    Blocks[x, y].Rectangle.Fill = Brushes.Red;
+                    break;
+                case BlockType.Wall:
+                    Blocks[x, y].Rectangle.Fill = Brushes.Gray;
+                    break;
+                default:
+                    break;
             }
         }
     }
 }
+

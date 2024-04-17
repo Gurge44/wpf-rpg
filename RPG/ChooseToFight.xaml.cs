@@ -11,8 +11,10 @@ namespace RPG
     /// </summary>
     public partial class ChooseToFight : Window
     {
-        public ChooseToFight()
+        public int level;
+        public ChooseToFight(int level)
         {
+            this.level = level;
             InitializeComponent();
             Main.LoadCharacters();
             if (false)
@@ -24,7 +26,7 @@ namespace RPG
         }
         public void Navigate()
         {
-            Frame.NavigationService.Navigate(new Fight());
+            Frame.NavigationService.Navigate(new Fight(level));
         }
 
 
