@@ -24,10 +24,9 @@ namespace RPG
     {
         private Tetris tetris;
 
-        public Fight()
+        public Fight(int level)
         {
             InitializeComponent();
-            MainTetris.FightInstance(this);
             MainFight.Fightinstance(this);
             SetHealths();
             MainFight.MainGrid = main_grid;
@@ -35,8 +34,10 @@ namespace RPG
             {
                 CreateEnemyGrid();
                 CreateCharacterGrid();
-                tetris = new Tetris();
-                tetris.InitializeMain(1);
+                tetris = new Tetris(level);
+                KeyDown += tetris.Move;
+                MainFight.time = 10000;
+                TimerProgressBar();
                 InitializeTimer();
             }
             else
