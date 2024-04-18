@@ -119,7 +119,7 @@ namespace RPG
                 ManageCharactersButton_Click(sender, e);
                 return;
             }
-            Main.ShowFight(1);
+            Frame.NavigationService.Navigate(new Room());
         }
 
         public void LoadGameButton_Click(object sender, RoutedEventArgs e)

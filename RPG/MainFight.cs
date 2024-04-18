@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Navigation;
 
 namespace RPG
 {
@@ -38,7 +40,7 @@ namespace RPG
                 Main.Enemies.Remove(Currentenemy);
                 if (Main.Enemies.Count == 0)
                 {
-                    //end game
+                    FightOver();
                 }
             }
         }
@@ -49,6 +51,11 @@ namespace RPG
             enemyDamage = 50 * level;
             characterHealth = 1000;
             characterDamage = 100;
+        }
+
+        public static void FightOver()
+        {
+            ChooseToFight.Instance.Close();
         }
 
 
