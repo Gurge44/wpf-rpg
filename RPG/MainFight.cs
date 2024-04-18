@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Navigation;
@@ -25,6 +27,7 @@ namespace RPG
         public static int Max_E;
         public static int Max_C;
         public static ProgressBar enemyHprogressBar = new ProgressBar();
+        public static ProgressBar characterHprogressBar = new ProgressBar();
 
         public static void Fightinstance(Fight fight)
         {
@@ -33,31 +36,28 @@ namespace RPG
 
         public static void EndCurrentAttack()
         {
-            enemyHealth -= 10;
+            enemyHealth -= characterDamage;
             enemyHprogressBar.Value = enemyHealth;
-            if (enemyHealth <= 0)
+            if (enemyHealth <= 0 || characterHealth <= 0)
             {
-                Main.Enemies.Remove(Currentenemy);
-                if (Main.Enemies.Count == 0)
-                {
-                    FightOver();
-                }
+                FightOver();
+                
             }
+            characterHealth -= enemyDamage;
+            characterHprogressBar.Value = characterHealth;
         }
 
         public static void SetDefaultValues(int level)
         {
             enemyHealth = 200 * level;
-            enemyDamage = 50 * level;
+            enemyDamage = 10 * level;
             characterHealth = 1000;
-            characterDamage = 100;
+            characterDamage = 20;
         }
 
         public static void FightOver()
         {
             ChooseToFight.Instance.Close();
         }
-
-
     }
 }

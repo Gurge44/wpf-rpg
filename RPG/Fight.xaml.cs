@@ -28,16 +28,16 @@ namespace RPG
         {
             InitializeComponent();
             MainFight.Fightinstance(this);
+            MainFight.SetDefaultValues(level);
             SetHealths();
             MainFight.MainGrid = main_grid;
             if (Main.SelectedCharacter != null)
             {
                 CreateEnemyGrid();
                 CreateCharacterGrid();
-                MainFight.time = 10000;
+                MainFight.time = 5000;
                 TimerProgressBar();
                 InitializeTimer();
-                MainFight.SetDefaultValues(level);
             }
             else
             {
@@ -47,8 +47,6 @@ namespace RPG
         }
         public void SetHealths()
         {
-            MainFight.characterHealth = 1000;
-            MainFight.enemyHealth = 200;
             MainFight.Max_C = MainFight.characterHealth;
             MainFight.Max_E = MainFight.enemyHealth;
         }
@@ -110,10 +108,10 @@ namespace RPG
 
             grid_name.Children.Add(name);
             Grid.SetRow(grid_name, 0);
-            Grid.SetRow(progressBar, 1);
+            Grid.SetRow(MainFight.characterHprogressBar, 1);
             character_name_grid.Children.Add(grid_name);
-            character_name_grid.Children.Add(progressBar);
-            CharacterProgressBar(progressBar);
+            character_name_grid.Children.Add(MainFight.characterHprogressBar);
+            CharacterProgressBar(MainFight.characterHprogressBar);
 
         }
 

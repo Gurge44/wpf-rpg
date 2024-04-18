@@ -151,7 +151,6 @@ namespace RPG
             };
             x.Show();
             AllowClose = true;
-            CurrentMainWindow.Instance.Close();
         }
     }
 }

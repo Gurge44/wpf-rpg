@@ -11,9 +11,17 @@
 
   <ItemGroup>
     <None Remove="add.png" />
+    <None Remove="Armory.jpg" />
+    <None Remove="Blacksmith.jpg" />
     <None Remove="cancel.png" />
+    <None Remove="ChestRoom.jpg" />
     <None Remove="delete.png" />
+    <None Remove="GildedHallway.jpg" />
+    <None Remove="GreatDoors.jpg" />
+    <None Remove="GreatHall.jpg" />
+    <None Remove="Hallway.jpg" />
     <None Remove="intro.mp4" />
+    <None Remove="prisoncell.jpg" />
     <None Remove="quit.png" />
     <None Remove="return.png" />
     <None Remove="save.png" />
@@ -26,6 +34,12 @@
   <ItemGroup>
     <Resource Include="add.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Armory.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Blacksmith.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="cancel.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -44,13 +58,31 @@
     <Resource Include="Characters\char7.png" />
     <Resource Include="Characters\char8.png" />
     <Resource Include="Characters\char9.png" />
+    <Resource Include="ChestRoom.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="cs2.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="delete.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="GildedHallway.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="GreatDoors.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="GreatHall.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Hallway.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="intro.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="prisoncell.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="quit.png">
