@@ -65,7 +65,6 @@ namespace RPG
             };
             selectButton.Click += (s, args) =>
             {
-                MessageBox.Show("Character selected");
                 Main.SelectedCharacter = (sender as Button)?.Tag as Character;
                 Main.nextPage = true;
                 messageBox.Close();

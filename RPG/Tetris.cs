@@ -217,6 +217,7 @@ namespace RPG
                 case Key.Q:
                     MainFight.enemyHealth = 0;
                     MainFight.enemyHprogressBar.Value = MainFight.enemyHealth;
+                    ChooseToFight.Instance.Close();
                     break;
                 default:
                     break;
@@ -443,14 +444,7 @@ namespace RPG
                             if (MainTetris.Blocks[j, k].IsLocked)
                             {
                                 MainTetris.Blocks[j, k].IsLocked = false;
-                                if (MainTetris.Blocks[j, k + 1].Type == BlockType.Empty)
-                                {
-                                    MainTetris.Blocks[j, k + 1].IsLocked = false;
-                                }
-                                else
-                                {
-                                    MainTetris.Blocks[j, k + 1].IsLocked = true;
-                                }
+                                MainTetris.Blocks[j, k + 1].IsLocked = true;
                                 MainTetris.Blocks[j, k + 1].Type = MainTetris.Blocks[j, k].Type;
                                 MainTetris.Blocks[j, k].Type = BlockType.Empty;
                                 MainTetris.DrawBlock(j, k);
@@ -459,9 +453,16 @@ namespace RPG
                         }
                     }
                     i++;
+                    MainFight.characterDamage += 50;
                 }
             }
-            MainFight.characterDamage *= 20;
+            foreach (var block in MainTetris.Blocks)
+            {
+                if (block.Type == BlockType.Empty)
+                    block.IsLocked = false;
+                if (block.Type == MainTetris.CurrentBlock.Type)
+                    block.IsLocked = true;
+            }
 
 
         }

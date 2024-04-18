@@ -119,6 +119,7 @@ namespace RPG
                 ManageCharactersButton_Click(sender, e);
                 return;
             }
+            Main.SetMainWindowContents(Visibility.Hidden);
             Frame.NavigationService.Navigate(new Room());
         }
 
