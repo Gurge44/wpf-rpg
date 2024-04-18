@@ -22,12 +22,11 @@ namespace RPG
     /// </summary>
     public partial class Fight : Page
     {
-        private Tetris tetris;
+        public Tetris tetris;
 
-        public Fight()
+        public Fight(int level)
         {
             InitializeComponent();
-            MainTetris.FightInstance(this);
             MainFight.Fightinstance(this);
             SetHealths();
             MainFight.MainGrid = main_grid;
@@ -35,9 +34,10 @@ namespace RPG
             {
                 CreateEnemyGrid();
                 CreateCharacterGrid();
-                tetris = new Tetris();
-                tetris.InitializeMain(1);
+                MainFight.time = 10000;
+                TimerProgressBar();
                 InitializeTimer();
+                MainFight.SetDefaultValues(level);
             }
             else
             {
@@ -45,7 +45,6 @@ namespace RPG
             }
 
         }
-
         public void SetHealths()
         {
             MainFight.characterHealth = 1000;
@@ -154,7 +153,6 @@ namespace RPG
             {
                 MainFight.EndCurrentAttack();
                 MainFight.time = 10000;
-                tetris.CreateMainGrid();
             }
             else
             {
