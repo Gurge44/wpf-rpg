@@ -116,7 +116,6 @@
 
         <Frame x:Name="RoomFrame" NavigationUIVisibility="Hidden"/>
 
-        <Frame Name="Frame"/>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="20">
             <Label Style="{StaticResource CustomLabelStyle}" Content="???" FontSize="60" FontWeight="Bold" HorizontalAlignment="Center" x:Name="RoomTitleBox"/>
             <TextBlock Style="{StaticResource CustomTextBlockStyle}" x:Name="RoomDescriptionBox" FontSize="16" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0,20,0,20" Height="91" Text="You wake up with an aching head and no idea where you are. You look around and see that you are in what seems to be a prison cell. To your surprise, the door seems to be slightly open..."/>

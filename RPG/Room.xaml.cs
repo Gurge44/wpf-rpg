@@ -111,6 +111,10 @@ namespace RPG
         }
         private void FirstButton_Click(object sender, RoutedEventArgs e)
         {
+            if (NextFirstRoom.Fight != "")
+            {
+                Main.ShowFight(Counter);
+            }
             if (Counter!=7)
             {
                 SceneChange(NextFirstRoom);
@@ -122,10 +126,18 @@ namespace RPG
         }
         private void SecondButton_Click(object sender, RoutedEventArgs e)
         {
+            if (NextSecondRoom.Fight != "")
+            {
+                Main.ShowFight(Counter);
+            }
             SceneChange(NextSecondRoom);
         }
         private void ThirdButton_Click(object sender, RoutedEventArgs e)
         {
+            if (NextThirdRoom.Fight != "")
+            {
+                Main.ShowFight(Counter);
+            }
             SceneChange(NextThirdRoom);
         }
     }

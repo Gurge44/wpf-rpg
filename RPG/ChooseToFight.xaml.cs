@@ -14,8 +14,11 @@ namespace RPG
     {
         public int level;
         public Tetris tetris;
+        public static ChooseToFight Instance;
+
         public ChooseToFight(int level)
         {
+            Instance = this;
             this.level = level;
             InitializeComponent();
             Main.LoadCharacters();

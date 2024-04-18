@@ -60,7 +60,7 @@ namespace RPG
             {
                 Content = "Select",
                 Margin = new Thickness(5),
-                Padding = new Thickness(10),
+                Padding = new Thickness(1),
                 Width = 75
             };
             selectButton.Click += (s, args) =>
@@ -76,7 +76,7 @@ namespace RPG
             {
                 Content = "Cancel",
                 Margin = new Thickness(5),
-                Padding = new Thickness(10),
+                Padding = new Thickness(1),
                 Width = 75
             };
             cancelButton.Click += (s, args) =>
