@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -12,11 +11,8 @@ namespace RPG
     /// </summary>
     public partial class ChooseToFight : Window
     {
-        public int level;
-        public Tetris tetris;
-        public ChooseToFight(int level)
+        public ChooseToFight()
         {
-            this.level = level;
             InitializeComponent();
             Main.LoadCharacters();
             if (false)
@@ -28,9 +24,9 @@ namespace RPG
         }
         public void Navigate()
         {
-            Frame.NavigationService.Navigate(new Fight(level));
+            Frame.NavigationService.Navigate(new Fight());
         }
-        
+
 
         public void SetBackgroundImage()
         {

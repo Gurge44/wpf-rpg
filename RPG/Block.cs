@@ -14,27 +14,34 @@ namespace RPG
         public int X { get; set; }
         public int Y { get; set; }
         public Rectangle Rectangle { get; set; }
-        public bool IsLocked { get; set; }
-
     }
 
     public enum BlockType
     {
         Empty,
+        Piece,
+        Border,
+    }
+
+    //tetris
+    public class Piece
+    {
+        public PieceType Type { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
+        public int Rotation { get; set; }
+        public List<Block> Blocks { get; set; }
+    }
+
+    public enum PieceType
+    {
         I,
         J,
         L,
         O,
         S,
         T,
-        Z,
-        Wall
+        Z
     }
 
-    public enum Direction
-    {
-        Left,
-        Right,
-        Down
-    }
 }

@@ -142,16 +142,5 @@ namespace RPG
             mainwindow.ManageCharactersButton.Visibility = visibility;
             mainwindow.QuitButton.Visibility = visibility;
         }
-
-        public static void ShowFight(int level)
-        {
-            var x = new ChooseToFight(level)
-            {
-                WindowStartupLocation = WindowStartupLocation.CenterScreen
-            };
-            x.Show();
-            AllowClose = true;
-            CurrentMainWindow.Instance.Close();
-        }
     }
 }

@@ -8,305 +8,270 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using System.Windows.Threading;
 
 namespace RPG
 {
     public class Tetris
     {
-        public Tetris()
+        public void InitializeMain(int level)
         {
-            InitializeGame();
-            CreateMainGrid();
-            CreatePiece();
-            InitializeTimer();
-        }
-        public void InitializeGame()
-        {
-            MainTetris.Random = new Random();
-            MainTetris.Width = 10;
-            MainTetris.Height = 20;
+            MainTetris.Width = 20;
+            MainTetris.Height = 10;
+            MainTetris.Score = 0;
+            MainTetris.Lines = 0;
+            MainTetris.Level = level;
             MainTetris.Blocks = new Block[MainTetris.Width, MainTetris.Height];
-            MainTetris.PositionX = MainTetris.Width / 2;
-            MainTetris.PositionY = 0;
+            MainTetris.CurrentPiece = new Piece();
+            MainTetris.NextPiece = new Piece();
+            MainTetris.IsNewPiece = true;
+            MainFight.Instance.TimerProgressBar();
+            CreateMainGrid();
         }
-
-        public void InitializeTimer()
-        {
-            var timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(500);
-            timer.Tick += Timer_Tick;
-            timer.Start();
-        }
-
-        public void Timer_Tick(object sender, EventArgs e)
-        {
-            MoveToDirection(Direction.Down);
-        }
-
         public void CreateMainGrid()
         {
-            MainFight.Instance.main_grid.ColumnDefinitions.Clear();
-            MainFight.Instance.main_grid.RowDefinitions.Clear();
-            MainFight.Instance.main_grid.Children.Clear();
+            MainFight.MainGrid.Children.Clear();
+            MainFight.MainGrid.ColumnDefinitions.Clear();
+            MainFight.MainGrid.RowDefinitions.Clear();
             for (int i = 0; i < MainTetris.Width; i++)
             {
-                MainFight.Instance.main_grid.ColumnDefinitions.Add(new ColumnDefinition());
+                MainFight.MainGrid.ColumnDefinitions.Add(new ColumnDefinition());
             }
             for (int i = 0; i < MainTetris.Height; i++)
             {
-                MainFight.Instance.main_grid.RowDefinitions.Add(new RowDefinition());
+                MainFight.MainGrid.RowDefinitions.Add(new RowDefinition());
             }
-            for (int i = 0; i < MainTetris.Width; i++)
+            for (int x = 0; x < MainTetris.Width; x++)
             {
-                for (int j = 0; j < MainTetris.Height; j++)
+                for (int y = 0; y < MainTetris.Height; y++)
                 {
                     Rectangle rectangle = new Rectangle();
-                    rectangle.Stroke = Brushes.Black;
-                    rectangle.StrokeThickness = 1;
-                    Grid.SetColumn(rectangle, i);
-                    Grid.SetRow(rectangle, j);
-                    MainFight.Instance.main_grid.Children.Add(rectangle);
-                    FillMatrix(i, j, rectangle);
+                    rectangle.Fill = Brushes.White;
+                    Grid.SetColumn(rectangle, x);
+                    Grid.SetRow(rectangle, y);
+                    MainFight.MainGrid.Children.Add(rectangle);
+                    FillMatrix(x, y, rectangle);
                 }
             }
-
         }
 
         public void FillMatrix(int x, int y, Rectangle rectangle)
         {
             MainTetris.Blocks[x, y] = new Block();
-            MainTetris.Blocks[x, y].Type = BlockType.Empty;
+            MainTetris.Blocks[x, y].Type = BlockType.Piece;
             MainTetris.Blocks[x, y].X = x;
             MainTetris.Blocks[x, y].Y = y;
             MainTetris.Blocks[x, y].Rectangle = rectangle;
-            MainTetris.Blocks[x, y].IsLocked = false;
             MainTetris.DrawBlock(x, y);
         }
-        public void CreatePiece()
+
+        public void Start()
         {
-            MainTetris.PositionX = MainTetris.Width / 2;
-            MainTetris.PositionY = 0;
-            MainTetris.CurrentBlock = new Block();
-            MainTetris.CurrentBlock.Type = (BlockType)MainTetris.Random.Next(1, 8);
-            MainTetris.Piece = new List<Block>();
-            foreach (var block in MainTetris.Piece)
+            if (MainTetris.IsNewGame)
             {
-                MainTetris.Blocks[block.X, block.Y].Type = BlockType.Empty;
+                MainTetris.IsNewGame = false;
+                MainTetris.IsGameOver = false;
+                MainTetris.IsPaused = false;
+                MainTetris.IsStarted = true;
+                MainTetris.Score = 0;
+                MainTetris.Lines = 0;
+                MainTetris.Level = 1;
+                MainTetris.LinesCleared = 0;
+                MainTetris.CurrentPiece = new Piece();
+                MainTetris.NextPiece = new Piece();
+                MainTetris.GameOver = false;
+                MainTetris.Paused = false;
+                MainTetris.Started = true;
+                MainTetris.IsNewPiece = true;
             }
+        }
 
-            MainTetris.Piece.Clear();
 
-            switch (MainTetris.CurrentBlock.Type)
+        public void End()
+        {
+            MainTetris.IsGameOver = true;
+            MainTetris.IsPaused = false;
+            MainTetris.IsStarted = false;
+            MainTetris.GameOver = true;
+        }
+
+        public void Restart()
+        {
+            MainTetris.IsNewGame = true;
+            MainTetris.IsGameOver = false;
+            MainTetris.IsPaused = false;
+            MainTetris.IsStarted = false;
+            MainTetris.GameOver = false;
+            MainTetris.Paused = false;
+            MainTetris.Started = false;
+            MainTetris.IsNewPiece = false;
+        }
+
+        public void Update()
+        {
+            if (MainTetris.IsStarted && !MainTetris.IsPaused && !MainTetris.IsGameOver)
             {
-                case BlockType.I:
-                    for (int i = 0; i < 4; i++)
-                    {
-                        int newX = MainTetris.PositionX + i;
-                        int newY = MainTetris.PositionY;
-                        MainTetris.Piece.Add(new Block() { X = newX, Y = newY, Type = BlockType.I });
-                        MainTetris.Blocks[newX, newY].Type = BlockType.I;
-                    }
-                    break;
-                case BlockType.J:
-                    MainTetris.Piece.Add(new Block() { X = MainTetris.PositionX, Y = MainTetris.PositionY, Type = BlockType.J });
-                    MainTetris.Piece.Add(new Block() { X = MainTetris.PositionX, Y = MainTetris.PositionY + 1, Type = BlockType.J });
-                    MainTetris.Piece.Add(new Block() { X = MainTetris.PositionX + 1, Y = MainTetris.PositionY + 1, Type = BlockType.J });
-                    MainTetris.Piece.Add(new Block() { X = MainTetris.PositionX + 2, Y = MainTetris.PositionY + 1, Type = BlockType.J });
-                    foreach (var block in MainTetris.Piece)
-                    {
-                        MainTetris.Blocks[block.X, block.Y].Type = BlockType.J;
-                    }
-                    break;
-                case BlockType.L:
-                    MainTetris.Piece.Add(new Block() { X = MainTetris.PositionX + 2, Y = MainTetris.PositionY, Type = BlockType.L });
-                    MainTetris.Piece.Add(new Block() { X = MainTetris.PositionX, Y = MainTetris.PositionY + 1, Type = BlockType.L });
-                    MainTetris.Piece.Add(new Block() { X = MainTetris.PositionX + 1, Y = MainTetris.PositionY + 1, Type = BlockType.L });
-                    MainTetris.Piece.Add(new Block() { X = MainTetris.PositionX + 2, Y = MainTetris.PositionY + 1, Type = BlockType.L });
-                    foreach (var block in MainTetris.Piece)
-                    {
-                        MainTetris.Blocks[block.X, block.Y].Type = BlockType.L;
-                    }
-                    break;
-                case BlockType.O:
-                    MainTetris.Piece.Add(new Block() { X = MainTetris.PositionX, Y = MainTetris.PositionY, Type = BlockType.O });
-                    MainTetris.Piece.Add(new Block() { X = MainTetris.PositionX + 1, Y = MainTetris.PositionY, Type = BlockType.O });
-                    MainTetris.Piece.Add(new Block() { X = MainTetris.PositionX, Y = MainTetris.PositionY + 1, Type = BlockType.O });
-                    MainTetris.Piece.Add(new Block() { X = MainTetris.PositionX + 1, Y = MainTetris.PositionY + 1, Type = BlockType.O });
-                    foreach (var block in MainTetris.Piece)
-                    {
-                        MainTetris.Blocks[block.X, block.Y].Type = BlockType.O;
-                    }
-                    break;
-                case BlockType.S:
-                    MainTetris.Piece.Add(new Block() { X = MainTetris.PositionX + 1, Y = MainTetris.PositionY, Type = BlockType.S });
-                    MainTetris.Piece.Add(new Block() { X = MainTetris.PositionX + 2, Y = MainTetris.PositionY, Type = BlockType.S });
-                    MainTetris.Piece.Add(new Block() { X = MainTetris.PositionX, Y = MainTetris.PositionY + 1, Type = BlockType.S });
-                    MainTetris.Piece.Add(new Block() { X = MainTetris.PositionX + 1, Y = MainTetris.PositionY + 1, Type = BlockType.S });
-                    foreach (var block in MainTetris.Piece)
-                    {
-                        MainTetris.Blocks[block.X, block.Y].Type = BlockType.S;
-                    }
-                    break;
-                case BlockType.T:
-                    MainTetris.Piece.Add(new Block() { X = MainTetris.PositionX + 1, Y = MainTetris.PositionY, Type = BlockType.T });
-                    MainTetris.Piece.Add(new Block() { X = MainTetris.PositionX, Y = MainTetris.PositionY + 1, Type = BlockType.T });
-                    MainTetris.Piece.Add(new Block() { X = MainTetris.PositionX + 1, Y = MainTetris.PositionY + 1, Type = BlockType.T });
-                    MainTetris.Piece.Add(new Block() { X = MainTetris.PositionX + 2, Y = MainTetris.PositionY + 1, Type = BlockType.T });
-                    foreach (var block in MainTetris.Piece)
-                    {
-                        MainTetris.Blocks[block.X, block.Y].Type = BlockType.T;
-                    }
-                    break;
-                case BlockType.Z:
-                    MainTetris.Piece.Add(new Block() { X = MainTetris.PositionX, Y = MainTetris.PositionY, Type = BlockType.Z });
-                    MainTetris.Piece.Add(new Block() { X = MainTetris.PositionX + 1, Y = MainTetris.PositionY, Type = BlockType.Z });
-                    MainTetris.Piece.Add(new Block() { X = MainTetris.PositionX + 1, Y = MainTetris.PositionY + 1, Type = BlockType.Z });
-                    MainTetris.Piece.Add(new Block() { X = MainTetris.PositionX + 2, Y = MainTetris.PositionY + 1, Type = BlockType.Z });
-                    foreach (var block in MainTetris.Piece)
-                    {
-                        MainTetris.Blocks[block.X, block.Y].Type = BlockType.Z;
-                    }
-                    break;
-                default:
-                    break;
-            }
-
-            foreach (var block in MainTetris.Piece)
-            {
-                if (MainTetris.Blocks[block.X, block.Y].IsLocked)
+                if (MainTetris.IsNewPiece)
                 {
-                    GameOver();
-                    return;
+                    MainTetris.CurrentPiece = MainTetris.NextPiece;
+                    MainTetris.NextPiece = new Piece();
+                    MainTetris.IsNewPiece = false;
                 }
-                MainTetris.DrawBlock(block.X, block.Y);
             }
         }
 
-
-        public void Move(object sender, KeyEventArgs e)
+        public void MoveLeft()
         {
-            switch (e.Key)
+            if (MainTetris.IsStarted && !MainTetris.IsPaused && !MainTetris.IsGameOver)
             {
-                case Key.Left:
-                    if (MainTetris.PositionX > 0)
+                if (MainTetris.CurrentPiece != null)
+                {
+                    MainTetris.CurrentPiece.X--;
+                    if (Collision())
                     {
-                        MoveToDirection(Direction.Left);
+                        MainTetris.CurrentPiece.X++;
                     }
-                    break;
-                case Key.Right:
-                    if (MainTetris.PositionX < MainTetris.Width - 1)
-                    {
-                        MoveToDirection(Direction.Right);
-                    }
-                    break;
-                case Key.Down:
-                    if (MainTetris.PositionY < MainTetris.Height - 1)
-                    {
-                        MoveToDirection(Direction.Down);
-                    }
-                    break;
-                case Key.Up:
-                    //Rotate();
-                    break;
-                default:
-                    break;
+                }
             }
         }
 
-
-        public void MoveToDirection(Direction direction)
+        public void MoveRight()
         {
-            switch (direction)
+            if (MainTetris.IsStarted && !MainTetris.IsPaused && !MainTetris.IsGameOver)
             {
-                case Direction.Left:
-                    if (MainTetris.PositionX >= 0 && MainTetris.PositionX <= MainTetris.Width - 1)
+                if (MainTetris.CurrentPiece != null)
+                {
+                    MainTetris.CurrentPiece.X++;
+                    if (Collision())
                     {
-                        for (int i = 0; i < MainTetris.Piece.Count; i++)
-                        {
-                            var block = MainTetris.Piece[i];
-                            if (block.X == 0 || MainTetris.Blocks[block.X - 1, block.Y].IsLocked)
-                            {
-                                return;
-                            }
-                        }
-                        for (int i = 0; i < MainTetris.Piece.Count; i++)
-                        {
-                            var block = MainTetris.Piece[i];
-                            MainTetris.Blocks[block.X, block.Y].Type = BlockType.Empty;
-                            MainTetris.DrawBlock(block.X, block.Y);
-                            block.X--;
-                            MainTetris.Blocks[block.X, block.Y].Type = MainTetris.CurrentBlock.Type;
-                            MainTetris.DrawBlock(block.X, block.Y);
-                        }
-                        MainTetris.PositionX--;
+                        MainTetris.CurrentPiece.X--;
                     }
-                    break;
-                case Direction.Right:
-                    if (MainTetris.PositionX < MainTetris.Width - 1 && MainTetris.PositionX >= 0)
-                    {
-                        for (int i = 0; i < MainTetris.Piece.Count; i++)
-                        {
-                            var block = MainTetris.Piece[i];
-                            if (block.X == MainTetris.Width - 1 || MainTetris.Blocks[block.X + 1, block.Y].IsLocked)
-                            {
-                                return;
-                            }
-                        }
-                        for (int i = MainTetris.Piece.Count - 1; i >= 0; i--)
-                        {
-                            var block = MainTetris.Piece[i];
-                            MainTetris.Blocks[block.X, block.Y].Type = BlockType.Empty;
-                            MainTetris.DrawBlock(block.X, block.Y);
-                            block.X++;
-                            MainTetris.Blocks[block.X, block.Y].Type = MainTetris.CurrentBlock.Type;
-                            MainTetris.DrawBlock(block.X, block.Y);
-                        }
-                        MainTetris.PositionX++;
-                    }
-                    break;
+                }
+            }
+        }
 
-                case Direction.Down:
-                    if (MainTetris.PositionY < MainTetris.Height - 1)
+        public void MoveDown()
+        {
+            if (MainTetris.IsStarted && !MainTetris.IsPaused && !MainTetris.IsGameOver)
+            {
+                if (MainTetris.CurrentPiece != null)
+                {
+                    MainTetris.CurrentPiece.Y++;
+                    if (Collision())
                     {
-                        MainTetris.PositionY++;
-                        for (int i = 0; i < MainTetris.Piece.Count; i++)
-                        {
-                            var block = MainTetris.Piece[i];
-                            if (block.Y == MainTetris.Height - 1 || MainTetris.Blocks[block.X, block.Y + 1].IsLocked)
-                            {
-                                LockPiece();
-                                CreatePiece();
-                                return;
-                            }
-                        }
-                        for (int i = MainTetris.Piece.Count - 1; i >= 0; i--)
-                        {
-                            var block = MainTetris.Piece[i];
-                            MainTetris.Blocks[block.X, block.Y].Type = BlockType.Empty;
-                            MainTetris.DrawBlock(block.X, block.Y);
-                            block.Y++;
-                            MainTetris.Blocks[block.X, block.Y].Type = MainTetris.CurrentBlock.Type;
-                            MainTetris.DrawBlock(block.X, block.Y);
-                        }
+                        MainTetris.CurrentPiece.Y--;
+                        LockPiece();
                     }
-                    break;
-                default:
-                    break;
+                }
+            }
+        }
+
+        public void Rotate()
+        {
+            if (MainTetris.IsStarted && !MainTetris.IsPaused && !MainTetris.IsGameOver)
+            {
+                if (MainTetris.CurrentPiece != null)
+                {
+                    MainTetris.CurrentPiece.Rotation++;
+                    if (Collision())
+                    {
+                        MainTetris.CurrentPiece.Rotation--;
+                    }
+                }
             }
         }
 
         public void LockPiece()
         {
-            foreach (var block in MainTetris.Piece)
+            if (MainTetris.CurrentPiece != null)
             {
-                MainTetris.Blocks[block.X, block.Y].IsLocked = true;
+                for (int i = 0; i < MainTetris.CurrentPiece.Blocks.Count; i++)
+                {
+                    Block block = MainTetris.CurrentPiece.Blocks[i];
+                    MainTetris.Blocks[block.X, block.Y] = block;
+                }
+                CheckLines();
+                MainTetris.IsNewPiece = true;
             }
         }
 
-        public void GameOver()
+        public void CheckLines()
         {
-            MessageBox.Show("Game Over");
+            for (int y = MainTetris.Height - 1; y >= 0; y--)
+            {
+                bool full = true;
+                for (int x = 0; x < MainTetris.Width; x++)
+                {
+                    if (MainTetris.Blocks[x, y] == null)
+                    {
+                        full = false;
+                        break;
+                    }
+                }
+                if (full)
+                {
+                    MainTetris.Lines++;
+                    MainTetris.LinesCleared++;
+                    MainTetris.Score += 100;
+                    for (int i = y; i > 0; i--)
+                    {
+                        for (int x = 0; x < MainTetris.Width; x++)
+                        {
+                            MainTetris.Blocks[x, i] = MainTetris.Blocks[x, i - 1];
+                        }
+                    }
+                    y++;
+                }
+            }
+        }
+        public static bool Collision()
+        {
+            if (MainTetris.CurrentPiece != null)
+            {
+                for (int i = 0; i < MainTetris.CurrentPiece.Blocks.Count; i++)
+                {
+                    Block block = MainTetris.CurrentPiece.Blocks[i];
+                    if (block.X < 0 || block.X >= MainTetris.Width || block.Y >= MainTetris.Height || MainTetris.Blocks[block.X, block.Y] != null)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        public void Move(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.Left:
+                    MoveLeft();
+                    break;
+                case Key.Right:
+                    MoveRight();
+                    break;
+                case Key.Down:
+                    MoveDown();
+                    break;
+                case Key.Up:
+                    Rotate();
+                    break;
+            }
+        }
+
+        public void SetPiece()
+        {
+            MainTetris.CurrentPiece = new Piece();
+            MainTetris.CurrentPiece.X = MainTetris.Width / 2;
+            MainTetris.CurrentPiece.Y = 0;
+            MainTetris.CurrentPiece.Type = (PieceType)MainTetris.random.Next(0, 7);
+            MainTetris.CurrentPiece.Blocks = new List<Block>();
+            for (int i = 0; i < 4; i++)
+            {
+                Block block = new Block();
+                block.Type = BlockType.Piece;
+                block.X = MainTetris.CurrentPiece.X;
+            }
+
+
         }
     }
 }
