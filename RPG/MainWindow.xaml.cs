@@ -114,12 +114,20 @@ namespace RPG
 
         private void NewGameButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!Main.nextPage)
-            {
-                ManageCharactersButton_Click(sender, e);
-                return;
-            }
-            Main.ShowFight(1);
+            //if (!Main.nextPage)
+            //{
+            //    ManageCharactersButton_Click(sender, e);
+            //    return;
+            //}
+            //var x = new ChooseToFight
+            //{
+            //    WindowStartupLocation = WindowStartupLocation.CenterScreen
+            //};
+            //x.Show();
+            //Main.AllowClose = true;
+            //Close();
+            Main.SetMainWindowContents(Visibility.Hidden);
+            Frame.Navigate(new Room());
         }
 
         public void LoadGameButton_Click(object sender, RoutedEventArgs e)
