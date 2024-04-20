@@ -101,13 +101,10 @@ namespace RPG
             switch (MainTetris.CurrentBlock.Type)
             {
                 case BlockType.I:
-                    for (int i = 0; i < 4; i++)
-                    {
-                        int newX = MainTetris.PositionX + i;
-                        int newY = MainTetris.PositionY;
-                        MainTetris.Piece.Add(new Block() { X = newX, Y = newY, Type = BlockType.I });
-                        MainTetris.Blocks[newX, newY].Type = BlockType.I;
-                    }
+                    MainTetris.Piece.Add(new Block() { X = MainTetris.PositionX, Y = MainTetris.PositionY, Type = BlockType.I });
+                    MainTetris.Piece.Add(new Block() { X = MainTetris.PositionX + 1, Y = MainTetris.PositionY, Type = BlockType.I });
+                    MainTetris.Piece.Add(new Block() { X = MainTetris.PositionX + 2, Y = MainTetris.PositionY, Type = BlockType.I });
+                    MainTetris.Piece.Add(new Block() { X = MainTetris.PositionX + 3, Y = MainTetris.PositionY, Type = BlockType.I });
                     break;
                 case BlockType.J:
                     MainTetris.Piece.Add(new Block() { X = MainTetris.PositionX, Y = MainTetris.PositionY, Type = BlockType.J });
@@ -230,7 +227,6 @@ namespace RPG
             switch (direction)
             {
                 case Direction.Left:
-                    if (MainTetris.PositionX >= 0 && MainTetris.PositionX <= MainTetris.Width - 1)
                     {
                         for (int i = 0; i < MainTetris.Piece.Count; i++)
                         {
@@ -317,7 +313,6 @@ namespace RPG
                         for (int i = 0; i < MainTetris.Piece.Count; i++)
                         {
                             var block = MainTetris.Piece[i];
-                            var blockY = block.Y;
 
                             if (block.Y == MainTetris.Height - 1 || MainTetris.Blocks[block.X, block.Y + 1].IsLocked)
                             {
@@ -359,6 +354,11 @@ namespace RPG
                         MainTetris.DrawBlock(block4.X, block4.Y);
 
                     }
+                    else
+                    {
+                        LockPiece();
+                        CreatePiece();
+                    }
                     break;
                 default:
                     break;
@@ -366,14 +366,33 @@ namespace RPG
         }
         public void Rotate()
         {
+
+            int centerX = MainTetris.Piece[1].X;
+            int centerY = MainTetris.Piece[1].Y;
+            bool allowRotate = true;
+            foreach (var block in MainTetris.Piece)
+            {
+                int newX = centerX - (block.Y - centerY);
+                int newY = centerY + (block.X - centerX);
+
+                if (newX < 0 || newX >= MainTetris.Width || newY < 0 || newY >= MainTetris.Height)
+                {
+                    allowRotate = false;
+                    break;
+                }
+            }
+
+            if (!allowRotate)
+            {
+                return;
+            }
+
             foreach (var block in MainTetris.Piece)
             {
                 MainTetris.Blocks[block.X, block.Y].Type = BlockType.Empty;
                 MainTetris.DrawBlock(block.X, block.Y);
             }
 
-            int centerX = MainTetris.Piece[1].X;
-            int centerY = MainTetris.Piece[1].Y;
 
             for (int i = MainTetris.Piece.Count - 1; i >= 0; i--)
             {
