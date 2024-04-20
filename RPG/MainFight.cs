@@ -26,8 +26,9 @@ namespace RPG
         public static Fight Instance;
         public static int Max_E;
         public static int Max_C;
-        public static ProgressBar enemyHprogressBar = new ProgressBar();
-        public static ProgressBar characterHprogressBar = new ProgressBar();
+        public static ProgressBar enemyHprogressBar;
+        public static ProgressBar characterHprogressBar;
+        public static bool first = true;
 
         public static void Fightinstance(Fight fight)
         {
@@ -49,10 +50,59 @@ namespace RPG
 
         public static void SetDefaultValues(int level)
         {
-            enemyHealth = 200 * level;
-            enemyDamage = 10 * level;
-            characterHealth = 1000;
-            characterDamage = 20;
+            switch (Main.SelectedCharacter.Strength)
+            {
+                case SkillLevel.VeryLow:
+                    characterHealth = 50;
+                    characterDamage = 5;
+                    break;
+                case SkillLevel.Low:
+                    characterHealth = 100;
+                    characterDamage = 10;
+                    break;
+                case SkillLevel.Average:
+                    characterHealth = 150;
+                    characterDamage = 15;
+                    break;
+                case SkillLevel.High:
+                    characterHealth = 200;
+                    characterDamage = 20;
+                    break;
+                case SkillLevel.VeryHigh:
+                    characterHealth = 250;
+                    characterDamage = 25;
+                    break;
+            }
+
+            switch (level)
+            {
+                case 1:
+                    enemyHealth = 50;
+                    enemyDamage = 5;
+                    break;
+                case 2:
+                    enemyHealth = 100;
+                    enemyDamage = 10;
+                    break;
+                case 3:
+                    enemyHealth = 150;
+                    enemyDamage = 15;
+                    break;
+                case 4:
+                    enemyHealth = 200;
+                    enemyDamage = 20;
+                    break;
+                case 5:
+                    enemyHealth = 250;
+                    enemyDamage = 25;
+                    break;
+                case 6:
+                    enemyHealth = 300;
+                    enemyDamage = 30;
+                    break;
+            }
+
+
         }
 
         public static void FightOver()

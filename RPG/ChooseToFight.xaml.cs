@@ -33,7 +33,7 @@ namespace RPG
         }
         public void Navigate()
         {
-            Frame.NavigationService.Navigate(new Fight(level));
+            Frame.NavigationService.Navigate(new Fight());
         }
         
 

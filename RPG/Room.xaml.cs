@@ -11,7 +11,7 @@ namespace RPG
     {
         Random r = new Random();
         RoomType NextFirstRoom, NextSecondRoom, NextThirdRoom;
-        int Counter = 0;
+        public static int Counter = 0;
         public Room()
         {
             InitializeComponent();

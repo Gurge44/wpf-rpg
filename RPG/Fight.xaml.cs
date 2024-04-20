@@ -24,26 +24,32 @@ namespace RPG
     {
         public Tetris tetris;
 
-        public Fight(int level)
+        public Fight()
         {
             InitializeComponent();
             MainFight.Fightinstance(this);
-            MainFight.SetDefaultValues(level);
+            InitializeFight();
+        }
+        public void InitializeFight()
+        {
+            MainFight.SetDefaultValues(Room.Counter);
             SetHealths();
             MainFight.MainGrid = main_grid;
             if (Main.SelectedCharacter != null)
             {
+                enemy_name_grid.Children.Clear();
+                character_name_grid.Children.Clear();
                 CreateEnemyGrid();
                 CreateCharacterGrid();
-                MainFight.time = 5000;
+                MainFight.time = 2000;
                 TimerProgressBar();
                 InitializeTimer();
+
             }
             else
             {
                 MessageBox.Show("Please select a character to fight with");
             }
-
         }
         public void SetHealths()
         {
@@ -65,6 +71,7 @@ namespace RPG
             Grid.SetRow(enemy, 0);
             Grid.SetColumn(enemy, 0);
             enemy_picture_grid.Children.Add(enemy);
+            MainFight.enemyHprogressBar = new ProgressBar();
 
             Grid grid_name = new Grid();
             Label name = new Label();
@@ -105,6 +112,7 @@ namespace RPG
             name.HorizontalContentAlignment = HorizontalAlignment.Right;
             name.VerticalContentAlignment = VerticalAlignment.Bottom;
 
+            MainFight.characterHprogressBar = new ProgressBar();
 
             grid_name.Children.Add(name);
             Grid.SetRow(grid_name, 0);
@@ -140,7 +148,7 @@ namespace RPG
         public void InitializeTimer()
         {
             DispatcherTimer timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMicroseconds(1);
+            timer.Interval = TimeSpan.FromMilliseconds(1);
             timer.Tick += Timer_Tick;
             timer.Start();
         }
@@ -150,7 +158,7 @@ namespace RPG
             if (MainFight.time == 0)
             {
                 MainFight.EndCurrentAttack();
-                MainFight.time = 10000;
+                MainFight.time = 2000;
             }
             else
             {
@@ -162,7 +170,7 @@ namespace RPG
         public void TimerProgressBar()
         {
             ProgressBar timer = timer_pb;
-            timer.Maximum = 10000;
+            timer.Maximum = 2000;
             timer.Minimum = 0;
             timer.Value = MainFight.time;
             timer.Foreground = Brushes.Gray;
